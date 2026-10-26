@@ -1,0 +1,2225 @@
+{
+  "generatedAt": "2026-10-24",
+  "trials": [
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-ADJ-01",
+      "registry": "DEMO-BTC-ADJ-01",
+      "source": "demo",
+      "title": "根治性切除后胆道癌辅助化疗对比观察（III 期）",
+      "short": "术后辅助化疗 vs 观察",
+      "phase": "III",
+      "status": "recruiting",
+      "scope": "adjuvant",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": null,
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某肿瘤协作组",
+      "summary": "根治性切除（R0/R1）后 8 周内入组，随机接受辅助化疗或观察。",
+      "updatedOn": "2026-10-18",
+      "verifiedOn": "2026-10-20",
+      "deadline": "2027-06-30",
+      "url": "https://example.org/DEMO-BTC-ADJ-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肝胆胰外科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-18"
+        },
+        {
+          "city": "杭州",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究医生（演示）",
+          "status": "planned",
+          "updatedOn": "2026-10-18"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊为肝内胆管癌、肝门部胆管癌、远端胆管癌或胆囊癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "resectability",
+          "text": "已完成根治性切除，影像未见残留或复发",
+          "field": "resected_now",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "stage",
+          "text": "术后病理分期 II–III 期（AJCC 第 8 版）",
+          "field": "stage_major",
+          "op": "in",
+          "value": [
+            "II",
+            "III"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "age",
+          "text": "入组时年龄 ≥ 18 岁",
+          "field": "age",
+          "op": "gte",
+          "value": "18",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 体力状态 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "总胆红素 ≤ 1.5 × 本中心参考上限",
+          "field": "tb_uln",
+          "op": "lte",
+          "value": "1.5",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "白蛋白 ≥ 30 g/L",
+          "field": "albumin",
+          "op": "gte",
+          "value": "30",
+          "hard": true
+        },
+        {
+          "kind": "exclude",
+          "category": "prior_tx",
+          "text": "既往接受过针对胆道癌的系统治疗（辅助化疗除外）",
+          "field": "prior_palliative",
+          "op": "eq",
+          "value": "0",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-09-30",
+          "kind": "deadline",
+          "text": "入组截止日期由 2027-03-31 延至 2027-06-30",
+          "from": "2027-03-31",
+          "to": "2027-06-30",
+          "source": "注册平台（演示）"
+        },
+        {
+          "on": "2026-10-18",
+          "kind": "site_update",
+          "text": "新增杭州中心（计划启动）",
+          "from": "",
+          "to": "杭州 · 计划启动",
+          "source": "注册平台（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-FGFR2-01",
+      "registry": "DEMO-BTC-FGFR2-01",
+      "source": "demo",
+      "title": "FGFR2 融合阳性胆管癌靶向治疗（II 期）",
+      "short": "FGFR2 融合 · 后线靶向",
+      "phase": "II",
+      "status": "recruiting",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc",
+        "pcc"
+      ],
+      "biomarker": {
+        "gene": "FGFR2",
+        "alt": "fusion"
+      },
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某生物制药",
+      "summary": "既往至少一线系统治疗后进展的 FGFR2 融合阳性胆管癌。",
+      "updatedOn": "2026-10-11",
+      "verifiedOn": "2026-10-15",
+      "deadline": "2027-12-31",
+      "url": "https://example.org/DEMO-BTC-FGFR2-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究医生（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-11"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的肝内或肝门部胆管癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "检测报告证实 FGFR2 融合阳性",
+          "field": "gene:FGFR2",
+          "op": "positive",
+          "value": "fusion",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往至少 1 线系统治疗后进展",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "总胆红素 ≤ 2 × 本中心参考上限",
+          "field": "tb_uln",
+          "op": "lte",
+          "value": "2",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-10-11",
+          "kind": "status_change",
+          "text": "状态由「即将招募」改为「招募中」",
+          "from": "即将招募",
+          "to": "招募中",
+          "source": "注册平台（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-IDH1-01",
+      "registry": "DEMO-BTC-IDH1-01",
+      "source": "demo",
+      "title": "IDH1 R132 突变胆管癌口服靶向对比化疗（III 期）",
+      "short": "IDH1 R132 · 后线",
+      "phase": "III",
+      "status": "recruiting",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc"
+      ],
+      "biomarker": {
+        "gene": "IDH1",
+        "alt": "R132"
+      },
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某跨国药企",
+      "summary": "IDH1 R132 突变、既往一线治疗后进展的肝内胆管癌。",
+      "updatedOn": "2026-09-26",
+      "verifiedOn": "2026-10-01",
+      "deadline": "2028-03-31",
+      "url": "https://example.org/DEMO-BTC-IDH1-01",
+      "sites": [
+        {
+          "city": "北京",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-09-26"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的肝内胆管癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "检测报告证实 IDH1 R132 突变",
+          "field": "gene:IDH1",
+          "op": "positive",
+          "value": "R132",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往 1 线系统治疗后进展",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        }
+      ],
+      "updates": []
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-HER2-01",
+      "registry": "DEMO-BTC-HER2-01",
+      "source": "demo",
+      "title": "HER2 表达胆道癌抗体偶联药物（II 期）",
+      "short": "HER2 表达 · ADC",
+      "phase": "II",
+      "status": "suspended",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": {
+        "gene": "HER2",
+        "alt": "amplification"
+      },
+      "requiresBiopsy": true,
+      "placebo": false,
+      "sponsor": "（演示）某生物制药",
+      "summary": "HER2 IHC 3+ 或 IHC 2+/ISH 阳性的胆道癌；需提供蜡块或重新活检。",
+      "updatedOn": "2026-09-20",
+      "verifiedOn": "2026-09-22",
+      "deadline": "2027-09-30",
+      "url": "https://example.org/DEMO-BTC-HER2-01",
+      "sites": [
+        {
+          "city": "广州",
+          "hospital": "XX 医院肝胆胰外科",
+          "contact": "研究医生（演示）",
+          "status": "closed",
+          "updatedOn": "2026-09-20"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌（含胆囊癌）",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "HER2 IHC 3+，或 IHC 2+ 且 ISH 阳性",
+          "field": "gene:HER2",
+          "op": "positive",
+          "value": "amplification",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "other",
+          "text": "可提供存档蜡块，或同意重新活检",
+          "field": "biopsy_ok",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往至少 1 线系统治疗",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-09-20",
+          "kind": "status_change",
+          "text": "状态由「招募中」改为「暂停招募」",
+          "from": "招募中",
+          "to": "暂停招募",
+          "source": "注册平台（演示）"
+        },
+        {
+          "on": "2026-09-20",
+          "kind": "site_update",
+          "text": "广州中心暂停入组",
+          "from": "开放",
+          "to": "暂停",
+          "source": "中心公告（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-KRAS-01",
+      "registry": "DEMO-BTC-KRAS-01",
+      "source": "demo",
+      "title": "KRAS G12C/G12D 抑制剂治疗 KRAS 突变实体瘤（I/II 期）",
+      "short": "KRAS 突变 · 篮子试验",
+      "phase": "I/II",
+      "status": "recruiting",
+      "scope": "agnostic",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": {
+        "gene": "KRAS",
+        "alt": "G12C/G12D"
+      },
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某创新药企",
+      "summary": "携带 KRAS G12C 或 G12D 的晚期实体瘤，包含胆道癌队列。",
+      "updatedOn": "2026-10-08",
+      "verifiedOn": "2026-10-10",
+      "deadline": "2027-12-31",
+      "url": "https://example.org/DEMO-BTC-KRAS-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-08"
+        },
+        {
+          "city": "成都",
+          "hospital": "XX 医院肿瘤科",
+          "contact": "研究医生（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-08"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "diagnosis",
+          "text": "经病理确诊的晚期实体瘤，含胆道癌队列",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "检测证实 KRAS G12C 或 G12D 突变",
+          "field": "gene:KRAS",
+          "op": "positive",
+          "value": "G12C/G12D",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "标准治疗失败或不耐受",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "总胆红素 ≤ 1.5 × 本中心参考上限",
+          "field": "tb_uln",
+          "op": "lte",
+          "value": "1.5",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-10-08",
+          "kind": "status_change",
+          "text": "状态由「即将招募」改为「招募中」",
+          "from": "即将招募",
+          "to": "招募中",
+          "source": "注册平台（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-MSI-01",
+      "registry": "DEMO-BTC-MSI-01",
+      "source": "demo",
+      "title": "MSI-H/dMMR 胆道癌免疫治疗（II 期）",
+      "short": "MSI-H/dMMR · 免疫",
+      "phase": "II",
+      "status": "recruiting",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": {
+        "gene": "MSI",
+        "alt": "MSI-H"
+      },
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某肿瘤协作组",
+      "summary": "MSI-H 或 dMMR 的晚期胆道癌，既往系统治疗后。",
+      "updatedOn": "2026-08-30",
+      "verifiedOn": "2026-09-05",
+      "deadline": "2027-05-31",
+      "url": "https://example.org/DEMO-BTC-MSI-01",
+      "sites": [
+        {
+          "city": "北京",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-08-30"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "MSI-H 或 dMMR（IHC / PCR / NGS 任一）",
+          "field": "gene:MSI",
+          "op": "positive",
+          "value": "MSI-H",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往至少 1 线系统治疗",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        }
+      ],
+      "updates": []
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-1L-01",
+      "registry": "DEMO-BTC-1L-01",
+      "source": "demo",
+      "title": "晚期胆道癌一线免疫联合化疗对比化疗（III 期）",
+      "short": "晚期一线 · 免疫联合",
+      "phase": "III",
+      "status": "recruiting",
+      "scope": "advanced_1l",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": null,
+      "requiresBiopsy": false,
+      "placebo": true,
+      "sponsor": "（演示）某跨国药企",
+      "summary": "不可切除或转移性胆道癌，未接受过系统治疗。",
+      "updatedOn": "2026-10-02",
+      "verifiedOn": "2026-10-06",
+      "deadline": "2028-06-30",
+      "url": "https://example.org/DEMO-BTC-1L-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究医生（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-02"
+        },
+        {
+          "city": "广州",
+          "hospital": "XX 医院肝胆胰外科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-02"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "resectability",
+          "text": "不可切除或转移性，未接受过针对晚期的系统治疗",
+          "field": "advanced_tx_naive",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "总胆红素 ≤ 1.5 × 本中心参考上限",
+          "field": "tb_uln",
+          "op": "lte",
+          "value": "1.5",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–1",
+          "field": "ecog",
+          "op": "lte",
+          "value": "1",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-10-02",
+          "kind": "criteria_change",
+          "text": "方案 v3：允许既往辅助化疗结束 ≥ 6 个月者入组",
+          "from": "排除任何既往化疗",
+          "to": "辅助化疗结束 ≥ 6 个月可入组",
+          "source": "方案修订（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-2L-01",
+      "registry": "DEMO-BTC-2L-01",
+      "source": "demo",
+      "title": "胆道癌二线化疗联合靶向（II 期）",
+      "short": "二线 · 化疗联合",
+      "phase": "II",
+      "status": "recruiting",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": null,
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某肿瘤中心",
+      "summary": "一线治疗后影像提示进展的晚期胆道癌，无明确可靶向位点亦可入组。",
+      "updatedOn": "2026-10-12",
+      "verifiedOn": "2026-10-14",
+      "deadline": "2027-10-31",
+      "url": "https://example.org/DEMO-BTC-2L-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究护士（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-12"
+        },
+        {
+          "city": "广州",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究医生（演示）",
+          "status": "open",
+          "updatedOn": "2026-10-12"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌（含胆囊癌）",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "一线系统治疗后影像提示进展",
+          "field": "recurrent",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往系统治疗线数 ≤ 2",
+          "field": "prior_systemic",
+          "op": "lte",
+          "value": "2",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "organ",
+          "text": "总胆红素 ≤ 2 × 本中心参考上限",
+          "field": "tb_uln",
+          "op": "lte",
+          "value": "2",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "performance",
+          "text": "ECOG 0–2",
+          "field": "ecog",
+          "op": "lte",
+          "value": "2",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-10-05",
+          "kind": "criteria_change",
+          "text": "方案 v2：既往治疗线数上限由 1 改为 2",
+          "from": "≤ 1 线",
+          "to": "≤ 2 线",
+          "source": "方案修订（演示）"
+        },
+        {
+          "on": "2026-10-12",
+          "kind": "site_update",
+          "text": "新增广州中心",
+          "from": "",
+          "to": "广州 · 开放",
+          "source": "注册平台（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-OBS-01",
+      "registry": "DEMO-BTC-OBS-01",
+      "source": "demo",
+      "title": "胆道癌术后随访登记研究（观察性）",
+      "short": "术后随访登记",
+      "phase": "—",
+      "status": "recruiting",
+      "scope": "registry",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": null,
+      "requiresBiopsy": false,
+      "placebo": false,
+      "sponsor": "（演示）某医院肝胆胰中心",
+      "summary": "不改变治疗，只按常规复查节点登记影像、化验与治疗信息。",
+      "updatedOn": "2026-07-15",
+      "verifiedOn": "2026-07-20",
+      "deadline": "2029-12-31",
+      "url": "https://example.org/DEMO-BTC-OBS-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肝胆胰外科",
+          "contact": "随访专员（演示）",
+          "status": "open",
+          "updatedOn": "2026-07-15"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "resectability",
+          "text": "已完成根治性手术",
+          "field": "resected_ever",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "age",
+          "text": "年龄 ≥ 18 岁",
+          "field": "age",
+          "op": "gte",
+          "value": "18",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "other",
+          "text": "能按常规复查节点提供资料",
+          "field": "",
+          "op": "",
+          "value": "",
+          "hard": false
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-07-20",
+          "kind": "note",
+          "text": "登记研究不提供试验药物，也不改变随访方案",
+          "from": "",
+          "to": "",
+          "source": "中心说明（演示）"
+        }
+      ]
+    },
+    {
+      "created_at": "2026-10-24",
+      "id": "BTC-CLDN-01",
+      "registry": "DEMO-BTC-CLDN-01",
+      "source": "demo",
+      "title": "CLDN18.2 阳性胆道癌 ADC 治疗（II 期）",
+      "short": "CLDN18.2 · ADC",
+      "phase": "II",
+      "status": "not_yet_recruiting",
+      "scope": "advanced_2l",
+      "subtypes": [
+        "icc",
+        "pcc",
+        "dcc",
+        "gbc"
+      ],
+      "biomarker": {
+        "gene": "CLDN18",
+        "alt": "IHC ≥ 75%"
+      },
+      "requiresBiopsy": true,
+      "placebo": false,
+      "sponsor": "（演示）某生物制药",
+      "summary": "需近期活检标本做 CLDN18.2 IHC 中央检测。",
+      "updatedOn": "2026-10-16",
+      "verifiedOn": "2026-10-18",
+      "deadline": "2028-01-31",
+      "url": "https://example.org/DEMO-BTC-CLDN-01",
+      "sites": [
+        {
+          "city": "上海",
+          "hospital": "XX 医院肿瘤内科",
+          "contact": "研究医生（演示）",
+          "status": "planned",
+          "updatedOn": "2026-10-16"
+        }
+      ],
+      "criteria": [
+        {
+          "kind": "include",
+          "category": "subtype",
+          "text": "病理确诊的胆道癌",
+          "field": "subtype",
+          "op": "in",
+          "value": [
+            "icc",
+            "pcc",
+            "dcc",
+            "gbc"
+          ],
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "genomic",
+          "text": "CLDN18.2 IHC ≥ 75%（中央实验室）",
+          "field": "gene:CLDN18",
+          "op": "positive",
+          "value": "IHC≥75%",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "prior_tx",
+          "text": "既往至少 1 线系统治疗",
+          "field": "prior_systemic",
+          "op": "gte",
+          "value": "1",
+          "hard": true
+        },
+        {
+          "kind": "include",
+          "category": "other",
+          "text": "同意重新活检（存档标本不足时）",
+          "field": "biopsy_ok",
+          "op": "eq",
+          "value": "true",
+          "hard": true
+        }
+      ],
+      "updates": [
+        {
+          "on": "2026-10-16",
+          "kind": "status_change",
+          "text": "状态由「未开始招募」改为「即将招募」",
+          "from": "未开始招募",
+          "to": "即将招募",
+          "source": "注册平台（演示）"
+        }
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "p1",
+      "name": "周慧兰",
+      "initial": "周",
+      "age": 62,
+      "sex": "F",
+      "tag": "肝门部 · PTCD 减黄后手术 · 术后辅助",
+      "summary": "无痛性黄疸起病，外院 MRI 初报「肝内胆管癌可能」，MDT 结合 MRCP 与胆管受侵范围更正为肝门部胆管癌（Bismuth-Corlette IIIb）。PTCD 减黄 6 周后总胆红素从 286 降到 28，重评由不可切除改为可切除，6 月行右半肝 + 尾状叶切除 + 胆管切除 + 胆肠吻合。术后 7 月起卡培他滨辅助化疗，9 月首次术后复查未见复发。",
+      "subtype": [
+        {
+          "subtype": "icc",
+          "statedBy": "外院影像科 MRI 报告",
+          "statedOn": "2026-04-06",
+          "basis": "「肝内胆管扩张伴肝内占位」",
+          "current": false
+        },
+        {
+          "subtype": "pcc",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "statedOn": "2026-04-14",
+          "basis": "MRCP 示肝门部胆管截断、Bismuth-Corlette IIIb，肝内病灶为继发扩张",
+          "current": true
+        }
+      ],
+      "labRef": {
+        "totalBilirubinHigh": 21,
+        "directBilirubinHigh": 8,
+        "alpHigh": 125,
+        "ggtHigh": 60,
+        "altHigh": 40,
+        "astHigh": 40,
+        "albuminLow": 40,
+        "ca19_9High": 37
+      },
+      "stage": [
+        {
+          "system": "AJCC8",
+          "stage": "IIIB",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "statedOn": "2026-05-28",
+          "basis": "肿瘤侵及门静脉分支、区域淋巴结阳性（影像）",
+          "current": true
+        }
+      ],
+      "resectability": [
+        {
+          "conclusion": "unresectable",
+          "context": "initial",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "statedOn": "2026-04-14",
+          "basis": "总胆红素 286 μmol/L、FLR 不足、需先减黄",
+          "flr": "未来残肝 34%",
+          "current": false
+        },
+        {
+          "conclusion": "borderline",
+          "context": "post_drainage",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "statedOn": "2026-05-28",
+          "basis": "减黄后总胆红素 42 μmol/L，门静脉右支受累但可重建",
+          "flr": "未来残肝 41%",
+          "current": false
+        },
+        {
+          "conclusion": "resectable",
+          "context": "preop",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "statedOn": "2026-06-16",
+          "basis": "FLR 44%、无肝外转移、体能可耐受",
+          "flr": "未来残肝 44%",
+          "current": true
+        }
+      ],
+      "labs": [
+        {
+          "on": "2026-04-06",
+          "tb": 286,
+          "db": 198,
+          "alp": 682,
+          "ggt": 918,
+          "alt": 96,
+          "ast": 88,
+          "alb": 36,
+          "ca199": 412,
+          "cea": 3.2,
+          "wbc": 7.8,
+          "crp": 12,
+          "state": "reported"
+        },
+        {
+          "on": "2026-04-20",
+          "tb": 148,
+          "db": 102,
+          "alp": 540,
+          "ggt": 612,
+          "alt": 72,
+          "ast": 66,
+          "alb": 35,
+          "ca199": 386,
+          "cea": 3,
+          "wbc": 8.4,
+          "crp": 18,
+          "state": "reported"
+        },
+        {
+          "on": "2026-05-08",
+          "tb": 62,
+          "db": 41,
+          "alp": 388,
+          "ggt": 402,
+          "alt": 48,
+          "ast": 44,
+          "alb": 37,
+          "ca199": 244,
+          "cea": 2.8,
+          "wbc": 6.9,
+          "crp": 6,
+          "state": "reported"
+        },
+        {
+          "on": "2026-05-02",
+          "tb": null,
+          "db": null,
+          "alp": null,
+          "ggt": null,
+          "alt": null,
+          "ast": null,
+          "alb": null,
+          "ca199": null,
+          "cea": null,
+          "wbc": 13.6,
+          "crp": 62,
+          "state": "partial"
+        },
+        {
+          "on": "2026-05-28",
+          "tb": 42,
+          "db": 27,
+          "alp": 302,
+          "ggt": 318,
+          "alt": 36,
+          "ast": 33,
+          "alb": 38,
+          "ca199": 168,
+          "cea": 2.6,
+          "wbc": 6.2,
+          "crp": 4,
+          "state": "reported"
+        },
+        {
+          "on": "2026-06-16",
+          "tb": 28,
+          "db": 18,
+          "alp": 246,
+          "ggt": 244,
+          "alt": 31,
+          "ast": 29,
+          "alb": 39,
+          "ca199": 122,
+          "cea": 2.5,
+          "wbc": 5.8,
+          "crp": 3,
+          "state": "reported"
+        },
+        {
+          "on": "2026-07-20",
+          "tb": 34,
+          "db": 22,
+          "alp": 288,
+          "ggt": 296,
+          "alt": 58,
+          "ast": 52,
+          "alb": 34,
+          "ca199": 96,
+          "cea": 2.4,
+          "wbc": 6.5,
+          "crp": 8,
+          "state": "reported"
+        },
+        {
+          "on": "2026-08-24",
+          "tb": 22,
+          "db": 14,
+          "alp": 198,
+          "ggt": 176,
+          "alt": 42,
+          "ast": 38,
+          "alb": 36,
+          "ca199": 48,
+          "cea": 2.2,
+          "wbc": 5.4,
+          "crp": 3,
+          "state": "reported"
+        },
+        {
+          "on": "2026-09-15",
+          "tb": 19,
+          "db": 12,
+          "alp": 168,
+          "ggt": 142,
+          "alt": 34,
+          "ast": 30,
+          "alb": 38,
+          "ca199": 22,
+          "cea": 2,
+          "wbc": 5.1,
+          "crp": 2,
+          "state": "reported"
+        },
+        {
+          "on": "2026-10-12",
+          "tb": 17,
+          "db": 11,
+          "alp": 152,
+          "ggt": 128,
+          "alt": 30,
+          "ast": 27,
+          "alb": 39,
+          "ca199": 18,
+          "cea": 1.9,
+          "wbc": 5,
+          "crp": 2,
+          "state": "reported"
+        }
+      ],
+      "drainageDevices": [
+        {
+          "kind": "ptcd",
+          "side": "right",
+          "insertedOn": "2026-04-10",
+          "removedOn": "2026-04-24",
+          "event": "insert",
+          "hospital": "XX 医院介入科",
+          "note": "8.5F 外引流"
+        },
+        {
+          "kind": "ptcd",
+          "side": "right",
+          "insertedOn": "2026-04-24",
+          "removedOn": "2026-06-22",
+          "event": "exchange",
+          "hospital": "XX 医院介入科",
+          "note": "换 8.5F，梗阻减轻"
+        },
+        {
+          "kind": "ptcd",
+          "side": "right",
+          "insertedOn": "2026-06-22",
+          "removedOn": "2026-06-22",
+          "event": "remove",
+          "hospital": "XX 医院肝胆胰外科",
+          "note": "术前拔管"
+        }
+      ],
+      "drainageLogs": [
+        {
+          "dev": 1,
+          "on": "2026-04-10",
+          "ml": 380,
+          "color": "dark",
+          "patency": "flowing"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-12",
+          "ml": 620,
+          "color": "dark",
+          "patency": "flowing"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-15",
+          "ml": 540,
+          "color": "brown",
+          "patency": "flowing"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-18",
+          "ml": 460,
+          "color": "golden",
+          "patency": "flowing"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-21",
+          "ml": 410,
+          "color": "golden",
+          "patency": "flowing"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-24",
+          "ml": 120,
+          "color": "golden",
+          "patency": "slow",
+          "note": "换管当天，量偏少"
+        },
+        {
+          "dev": 2,
+          "on": "2026-04-26",
+          "ml": 350,
+          "color": "golden",
+          "patency": "flowing"
+        },
+        {
+          "dev": 2,
+          "on": "2026-05-06",
+          "ml": 240,
+          "color": "golden",
+          "patency": "flowing"
+        },
+        {
+          "dev": 2,
+          "on": "2026-05-20",
+          "ml": 180,
+          "color": "golden",
+          "patency": "flowing"
+        },
+        {
+          "dev": 2,
+          "on": "2026-06-02",
+          "ml": 150,
+          "color": "clear",
+          "patency": "flowing"
+        },
+        {
+          "dev": 2,
+          "on": "2026-06-14",
+          "ml": 90,
+          "color": "clear",
+          "patency": "slow",
+          "note": "颜色变浅，医生说要复查造影"
+        },
+        {
+          "dev": 2,
+          "on": "2026-06-21",
+          "ml": 60,
+          "color": "clear",
+          "patency": "flowing"
+        }
+      ],
+      "drainageObs": [
+        {
+          "dev": 2,
+          "on": "2026-05-02",
+          "kind": "fever",
+          "value": "38.9",
+          "severity": 6,
+          "action": "当晚去了急诊，医生给了抗生素",
+          "note": "先寒战后发热，持续约 4 小时"
+        },
+        {
+          "dev": 2,
+          "on": "2026-05-02",
+          "kind": "chills",
+          "value": "",
+          "severity": 5,
+          "action": "",
+          "note": "发热前约 1 小时开始"
+        },
+        {
+          "dev": 1,
+          "on": "2026-04-17",
+          "kind": "dressing_soaked",
+          "value": "",
+          "severity": 3,
+          "action": "自己换了敷料",
+          "note": "敷料湿透约 1/3"
+        }
+      ],
+      "tumor": [
+        {
+          "on": "2026-04-06",
+          "modality": "mri",
+          "count": 1,
+          "maxMm": 34,
+          "node": "suspected",
+          "distant": "no",
+          "vascular": "门静脉右支受压",
+          "duct": "Bismuth-Corlette IIIb",
+          "ascites": "none",
+          "lesions": [
+            {
+              "seq": 1,
+              "segment": "肝门部",
+              "size": 34
+            }
+          ]
+        },
+        {
+          "on": "2026-05-28",
+          "modality": "mrcp",
+          "count": 1,
+          "maxMm": 31,
+          "node": "suspected",
+          "distant": "no",
+          "vascular": "门静脉右支受累",
+          "duct": "Bismuth-Corlette IIIb",
+          "ascites": "none",
+          "lesions": []
+        },
+        {
+          "on": "2026-06-16",
+          "modality": "ct",
+          "count": 1,
+          "maxMm": 29,
+          "node": "no",
+          "distant": "no",
+          "vascular": "可重建",
+          "duct": "Bismuth-Corlette IIIb",
+          "ascites": "none",
+          "lesions": []
+        },
+        {
+          "on": "2026-09-15",
+          "modality": "ct",
+          "count": 0,
+          "maxMm": null,
+          "node": "no",
+          "distant": "no",
+          "vascular": "术后改变",
+          "duct": "",
+          "ascites": "none",
+          "lesions": []
+        }
+      ],
+      "treatments": [
+        {
+          "modality": "resection",
+          "intent": "curative",
+          "line": null,
+          "regimen": "右半肝 + 尾状叶切除 + 肝外胆管切除 + 胆肠吻合（R0）",
+          "startedOn": "2026-06-24",
+          "endedOn": "2026-06-24",
+          "cyclesPlanned": null,
+          "cyclesDone": null,
+          "response": "术后病理：中分化腺癌，切缘阴性，淋巴结 1/7 阳性（医生记录）",
+          "stopReason": "",
+          "institution": "XX 医院肝胆胰外科"
+        },
+        {
+          "modality": "systemic",
+          "intent": "adjuvant",
+          "line": 1,
+          "regimen": "卡培他滨单药",
+          "startedOn": "2026-07-20",
+          "endedOn": "",
+          "cyclesPlanned": 8,
+          "cyclesDone": 4,
+          "response": "术后辅助，按计划进行（医生记录）",
+          "stopReason": "",
+          "institution": "XX 医院肿瘤内科"
+        },
+        {
+          "modality": "stent_palliative",
+          "intent": "palliative",
+          "line": null,
+          "regimen": "PTCD 外引流（减黄）",
+          "startedOn": "2026-04-10",
+          "endedOn": "2026-06-22",
+          "cyclesPlanned": null,
+          "cyclesDone": null,
+          "response": "总胆红素 286 → 28 μmol/L",
+          "stopReason": "术前拔管",
+          "institution": "XX 医院介入科"
+        }
+      ],
+      "genomics": {
+        "test": {
+          "on": "2026-07-10",
+          "platform": "tissue_ngs",
+          "lab": "XX 医院病理科分子室",
+          "note": "手术标本"
+        },
+        "results": [
+          {
+            "gene": "FGFR2",
+            "alteration": "fusion",
+            "tested": 1,
+            "result": "negative",
+            "value": "",
+            "raw": "FGFR2 融合：未检出"
+          },
+          {
+            "gene": "IDH1",
+            "alteration": "R132",
+            "tested": 1,
+            "result": "negative",
+            "value": "",
+            "raw": "IDH1 R132：野生型"
+          },
+          {
+            "gene": "HER2",
+            "alteration": "amplification",
+            "tested": 1,
+            "result": "negative",
+            "value": "",
+            "raw": "HER2 扩增：阴性"
+          },
+          {
+            "gene": "MSI",
+            "alteration": "",
+            "tested": 1,
+            "result": "negative",
+            "value": "",
+            "raw": "MSI：稳定（MSS）"
+          },
+          {
+            "gene": "TMB",
+            "alteration": "",
+            "tested": 1,
+            "result": "negative",
+            "value": "3.1 mut/Mb",
+            "raw": "TMB：3.1 mut/Mb（低）"
+          },
+          {
+            "gene": "KRAS",
+            "alteration": "",
+            "tested": 0,
+            "result": null,
+            "value": "",
+            "raw": "报告未包含该位点"
+          }
+        ]
+      },
+      "safety": [
+        {
+          "kind": "cholangitis",
+          "onsetOn": "2026-05-02",
+          "resolvedOn": "2026-05-05",
+          "grade": "2 级（医生记录）",
+          "desc": "寒战、发热 38.9℃，引流液浑浊",
+          "action": "急诊留观，静脉抗生素 3 天",
+          "dev": 2
+        },
+        {
+          "kind": "liver_toxicity",
+          "onsetOn": "2026-07-20",
+          "resolvedOn": "2026-08-10",
+          "grade": "1 级（医生记录）",
+          "desc": "ALT 58 U/L、AST 52 U/L",
+          "action": "按肿瘤内科交代观察，未停药"
+        }
+      ],
+      "symptoms": [
+        {
+          "on": "2026-04-06",
+          "symptom": "皮肤瘙痒",
+          "severity": 6,
+          "note": "夜间明显"
+        },
+        {
+          "on": "2026-05-20",
+          "symptom": "皮肤瘙痒",
+          "severity": 2,
+          "note": "减黄后减轻"
+        }
+      ],
+      "body": [
+        {
+          "on": "2026-04-06",
+          "weight": 54.2,
+          "appetite": "fair"
+        },
+        {
+          "on": "2026-06-16",
+          "weight": 52.8,
+          "appetite": "fair"
+        },
+        {
+          "on": "2026-08-24",
+          "weight": 50.4,
+          "appetite": "poor"
+        },
+        {
+          "on": "2026-10-12",
+          "weight": 51.6,
+          "appetite": "fair"
+        }
+      ],
+      "visits": [
+        {
+          "on": "2026-04-14",
+          "dept": "肝胆胰 MDT",
+          "purpose": "定分型与减黄方案",
+          "summary": "更正为肝门部胆管癌，先做 PTCD 减黄 4–6 周再评估",
+          "next": "2026-05-28"
+        },
+        {
+          "on": "2026-05-28",
+          "dept": "肝胆胰 MDT",
+          "purpose": "减黄后重评可切除性",
+          "summary": "改为临界可切除，继续减黄",
+          "next": "2026-06-16"
+        },
+        {
+          "on": "2026-06-16",
+          "dept": "肝胆胰外科",
+          "purpose": "术前评估",
+          "summary": "定为可切除，排手术",
+          "next": "2026-06-24"
+        },
+        {
+          "on": "2026-09-15",
+          "dept": "肿瘤内科",
+          "purpose": "术后首次复查",
+          "summary": "影像未见复发，继续辅助化疗",
+          "next": "2026-12-15"
+        },
+        {
+          "on": "2026-12-15",
+          "dept": "肿瘤内科",
+          "purpose": "辅助化疗第 5 周期前复查",
+          "summary": "",
+          "next": "",
+          "planned": true
+        }
+      ],
+      "questions": [
+        {
+          "on": "2026-09-10",
+          "body": "辅助化疗要做满 8 个周期吗？中途白细胞低怎么办？",
+          "forVisit": "2026-09-15",
+          "answered": "医生说按计划做，白细胞低于标准会调整"
+        },
+        {
+          "on": "2026-12-01",
+          "body": "这次复查要查哪些项目？需要空腹吗？",
+          "forVisit": "2026-12-15",
+          "answered": ""
+        },
+        {
+          "on": "2026-12-01",
+          "body": "引流管拔掉之后，扎的口子一直有点渗液，正常吗？",
+          "forVisit": "2026-12-15",
+          "answered": ""
+        }
+      ],
+      "tasks": [
+        {
+          "title": "复查前空腹抽血",
+          "dueOn": "2026-12-15",
+          "kind": "test"
+        },
+        {
+          "title": "带上 9 月的 CT 报告",
+          "dueOn": "2026-12-15",
+          "kind": "visit"
+        }
+      ],
+      "viewpoints": [
+        {
+          "on": "2026-05-02",
+          "topic": "发热那天",
+          "body": "急诊医生说是引流管引起的感染，我当时以为是感冒。以后发烧先看引流液。",
+          "source": "self"
+        },
+        {
+          "on": "2026-08-24",
+          "topic": "体重",
+          "body": "吃不下，两个月掉了 2 公斤多，不知道算不算严重。",
+          "source": "caregiver"
+        }
+      ],
+      "decisions": [
+        {
+          "on": "2026-06-16",
+          "topic": "要不要做右半肝切除",
+          "reason": "残肝 44%、没有肝外转移、体力能耐受，可以按期做",
+          "statedBy": "XX 医院肝胆胰 MDT",
+          "source": "self",
+          "metrics": [
+            [
+              "bilirubin_total",
+              "2026-06-16"
+            ],
+            [
+              "albumin",
+              "2026-06-16"
+            ]
+          ]
+        },
+        {
+          "on": "2026-07-20",
+          "topic": "术后要不要做辅助化疗",
+          "reason": "淋巴结 1/7 阳性，按辅助化疗讨论，用卡培他滨单药",
+          "statedBy": "XX 医院肿瘤内科",
+          "source": "caregiver",
+          "metrics": []
+        }
+      ],
+      "flags": [
+        {
+          "metric": "ca19_9",
+          "on": "2026-10-12",
+          "kind": "value_question",
+          "note": "这次比 9 月又低了 4，是好事还是正常波动？"
+        }
+      ],
+      "docs": [
+        {
+          "title": "血生化 + 肿瘤标志物",
+          "kind": "lab",
+          "on": "2026-04-06",
+          "by": "外院门诊",
+          "line": "TBIL 286 μmol/L，ALP 682 U/L，CA19-9 412 U/mL",
+          "trend": 1
+        },
+        {
+          "title": "上腹部 MRI（含 MRCP）",
+          "kind": "imaging",
+          "on": "2026-04-06",
+          "by": "外院影像科",
+          "line": "肝门部占位，肝内胆管扩张，考虑胆道来源",
+          "trend": 0
+        },
+        {
+          "title": "手术病理报告",
+          "kind": "pathology",
+          "on": "2026-06-30",
+          "by": "XX 医院病理科",
+          "line": "中分化腺癌，切缘阴性，淋巴结 1/7 阳性",
+          "trend": 0
+        },
+        {
+          "title": "出院小结",
+          "kind": "discharge",
+          "on": "2026-07-02",
+          "by": "XX 医院肝胆胰外科",
+          "line": "术后第 8 天出院，切口愈合良好，嘱 1 个月后门诊",
+          "trend": 0
+        },
+        {
+          "title": "术后复查化验",
+          "kind": "lab",
+          "on": "2026-09-15",
+          "by": "XX 医院检验科",
+          "line": "TBIL 19 μmol/L，CA19-9 22 U/mL",
+          "trend": 1
+        }
+      ]
+    },
+    {
+      "id": "p2",
+      "name": "郭长林",
+      "initial": "郭",
+      "age": 67,
+      "sex": "M",
+      "tag": "胆囊癌术后 · 辅助化疗 · 影像提示复发",
+      "summary": "胆囊结石行胆囊切除，术后病理意外发现胆囊癌（pT3N1M0）。术后 5 月起卡培他滨辅助化疗。9 月复查 CT 见肝内新发结节，可切除性由「已切除」改为「不可切除（复发）」，目前讨论下一步方案。全程无胆道引流，主诉是化疗后的乏力和食欲。",
+      "subtype": [
+        {
+          "subtype": "gbc",
+          "statedBy": "XX 医院病理科",
+          "statedOn": "2026-04-03",
+          "basis": "术后病理：胆囊腺癌，侵透肌层至浆膜下",
+          "current": true
+        }
+      ],
+      "labRef": {
+        "totalBilirubinHigh": 23,
+        "directBilirubinHigh": 7,
+        "alpHigh": 120,
+        "ggtHigh": 55,
+        "altHigh": 45,
+        "astHigh": 40,
+        "albuminLow": 40,
+        "ca19_9High": 37
+      },
+      "stage": [
+        {
+          "system": "AJCC8",
+          "stage": "IIIB",
+          "statedBy": "XX 医院肿瘤内科",
+          "statedOn": "2026-05-06",
+          "basis": "pT3N1M0（病理）",
+          "current": true
+        }
+      ],
+      "resectability": [
+        {
+          "conclusion": "resectable",
+          "context": "initial",
+          "statedBy": "XX 医院肝胆胰外科",
+          "statedOn": "2026-04-03",
+          "basis": "术中已行胆囊癌根治（胆囊床切除 + 淋巴结清扫）",
+          "flr": "",
+          "current": false
+        },
+        {
+          "conclusion": "unresectable",
+          "context": "post_treatment",
+          "statedBy": "XX 医院肿瘤内科",
+          "statedOn": "2026-09-22",
+          "basis": "肝内新发两枚结节，考虑转移，不适合再次手术",
+          "flr": "",
+          "current": true
+        }
+      ],
+      "labs": [
+        {
+          "on": "2026-05-06",
+          "tb": 14,
+          "db": 8,
+          "alp": 96,
+          "ggt": 78,
+          "alt": 38,
+          "ast": 34,
+          "alb": 41,
+          "ca199": 18,
+          "cea": 2.1,
+          "wbc": 6.4,
+          "crp": 3,
+          "state": "reported"
+        },
+        {
+          "on": "2026-06-08",
+          "tb": 12,
+          "db": 7,
+          "alp": 88,
+          "ggt": 62,
+          "alt": 42,
+          "ast": 36,
+          "alb": 40,
+          "ca199": 15,
+          "cea": 2,
+          "wbc": 5.2,
+          "crp": 2,
+          "state": "reported"
+        },
+        {
+          "on": "2026-07-06",
+          "tb": 13,
+          "db": 8,
+          "alp": 102,
+          "ggt": 70,
+          "alt": 46,
+          "ast": 39,
+          "alb": 39,
+          "ca199": 21,
+          "cea": 2.3,
+          "wbc": 4.6,
+          "crp": 3,
+          "state": "reported"
+        },
+        {
+          "on": "2026-08-10",
+          "tb": 15,
+          "db": 9,
+          "alp": 118,
+          "ggt": 84,
+          "alt": 44,
+          "ast": 38,
+          "alb": 38,
+          "ca199": 34,
+          "cea": 2.6,
+          "wbc": 4.2,
+          "crp": 4,
+          "state": "reported"
+        },
+        {
+          "on": "2026-09-22",
+          "tb": 19,
+          "db": 11,
+          "alp": 156,
+          "ggt": 112,
+          "alt": 40,
+          "ast": 35,
+          "alb": 37,
+          "ca199": 96,
+          "cea": 3.8,
+          "wbc": 4.8,
+          "crp": 6,
+          "state": "reported"
+        },
+        {
+          "on": "2026-10-14",
+          "tb": null,
+          "db": null,
+          "alp": null,
+          "ggt": null,
+          "alt": null,
+          "ast": null,
+          "alb": null,
+          "ca199": 142,
+          "cea": 4.4,
+          "wbc": 5,
+          "crp": 5,
+          "state": "partial"
+        }
+      ],
+      "drainageDevices": [],
+      "drainageLogs": [],
+      "drainageObs": [],
+      "tumor": [
+        {
+          "on": "2026-04-03",
+          "modality": "pathology",
+          "count": 1,
+          "maxMm": 42,
+          "node": "yes",
+          "distant": "no",
+          "vascular": "侵及浆膜下",
+          "duct": "",
+          "ascites": "none",
+          "lesions": []
+        },
+        {
+          "on": "2026-06-10",
+          "modality": "ct",
+          "count": 0,
+          "maxMm": null,
+          "node": "no",
+          "distant": "no",
+          "vascular": "术后改变",
+          "duct": "",
+          "ascites": "none",
+          "lesions": []
+        },
+        {
+          "on": "2026-09-22",
+          "modality": "mri",
+          "count": 2,
+          "maxMm": 18,
+          "node": "no",
+          "distant": "no",
+          "vascular": "无",
+          "duct": "",
+          "ascites": "none",
+          "lesions": [
+            {
+              "seq": 1,
+              "segment": "S6",
+              "size": 18
+            },
+            {
+              "seq": 2,
+              "segment": "S7",
+              "size": 11
+            }
+          ]
+        }
+      ],
+      "treatments": [
+        {
+          "modality": "resection",
+          "intent": "curative",
+          "line": null,
+          "regimen": "胆囊癌根治术（胆囊床切除 + 肝十二指肠韧带淋巴结清扫）",
+          "startedOn": "2026-04-03",
+          "endedOn": "2026-04-03",
+          "cyclesPlanned": null,
+          "cyclesDone": null,
+          "response": "术后病理：pT3N1M0，切缘阴性（医生记录）",
+          "stopReason": "",
+          "institution": "XX 医院肝胆胰外科"
+        },
+        {
+          "modality": "systemic",
+          "intent": "adjuvant",
+          "line": 1,
+          "regimen": "卡培他滨单药",
+          "startedOn": "2026-05-06",
+          "endedOn": "2026-09-22",
+          "cyclesPlanned": 8,
+          "cyclesDone": 4,
+          "response": "9 月影像提示肝内新发结节（医生记录）",
+          "stopReason": "影像提示复发，转方案讨论",
+          "institution": "XX 医院肿瘤内科"
+        },
+        {
+          "modality": "systemic",
+          "intent": "palliative",
+          "line": 2,
+          "regimen": "待定（10-20 门诊讨论）",
+          "startedOn": "",
+          "endedOn": "",
+          "cyclesPlanned": null,
+          "cyclesDone": null,
+          "response": "",
+          "stopReason": "",
+          "institution": ""
+        }
+      ],
+      "genomics": {
+        "test": {
+          "on": "2026-04-20",
+          "platform": "tissue_ngs",
+          "lab": "XX 医院病理科分子室",
+          "note": "胆囊癌根治标本"
+        },
+        "results": [
+          {
+            "gene": "HER2",
+            "alteration": "amplification",
+            "tested": 1,
+            "result": "negative",
+            "value": "IHC 2+ / FISH 阴性",
+            "raw": "HER2：IHC 2+，FISH 未扩增"
+          },
+          {
+            "gene": "MSI",
+            "alteration": "",
+            "tested": 1,
+            "result": "negative",
+            "value": "",
+            "raw": "MSI：稳定（MSS）"
+          },
+          {
+            "gene": "MMR",
+            "alteration": "",
+            "tested": 1,
+            "result": "positive",
+            "value": "",
+            "raw": "MMR：蛋白表达完整（pMMR）"
+          },
+          {
+            "gene": "TMB",
+            "alteration": "",
+            "tested": 1,
+            "result": "negative",
+            "value": "4.2 mut/Mb",
+            "raw": "TMB：4.2 mut/Mb（低）"
+          },
+          {
+            "gene": "FGFR2",
+            "alteration": "fusion",
+            "tested": 0,
+            "result": null,
+            "value": "",
+            "raw": "报告未包含该位点"
+          }
+        ]
+      },
+      "safety": [
+        {
+          "kind": "neuropathy",
+          "onsetOn": "2026-07-06",
+          "resolvedOn": "",
+          "grade": "1 级（医生记录）",
+          "desc": "手指末端麻木，不影响持物",
+          "action": "按肿瘤内科交代观察"
+        },
+        {
+          "kind": "other",
+          "onsetOn": "2026-08-10",
+          "resolvedOn": "",
+          "grade": "1 级（医生记录）",
+          "desc": "乏力、食欲下降",
+          "action": "记录饮食，未用药"
+        }
+      ],
+      "symptoms": [
+        {
+          "on": "2026-08-10",
+          "symptom": "乏力",
+          "severity": 5,
+          "note": "下午明显"
+        },
+        {
+          "on": "2026-09-22",
+          "symptom": "右上腹隐痛",
+          "severity": 3,
+          "note": "持续约两周"
+        }
+      ],
+      "body": [
+        {
+          "on": "2026-05-06",
+          "weight": 68.5,
+          "appetite": "good"
+        },
+        {
+          "on": "2026-07-06",
+          "weight": 66.2,
+          "appetite": "fair"
+        },
+        {
+          "on": "2026-09-22",
+          "weight": 64,
+          "appetite": "poor"
+        },
+        {
+          "on": "2026-10-14",
+          "weight": 63.1,
+          "appetite": "poor"
+        }
+      ],
+      "visits": [
+        {
+          "on": "2026-05-06",
+          "dept": "肿瘤内科",
+          "purpose": "术后辅助方案",
+          "summary": "卡培他滨单药 8 周期",
+          "next": "2026-09-22"
+        },
+        {
+          "on": "2026-09-22",
+          "dept": "肿瘤内科",
+          "purpose": "复查",
+          "summary": "肝内新发结节，考虑复发，10-20 再讨论方案",
+          "next": "2026-10-20"
+        },
+        {
+          "on": "2026-10-20",
+          "dept": "肿瘤内科",
+          "purpose": "下一步方案讨论",
+          "summary": "",
+          "next": "",
+          "planned": true
+        }
+      ],
+      "questions": [
+        {
+          "on": "2026-09-25",
+          "body": "肝上那两个结节一定是转移吗？要不要做 PET 确认？",
+          "forVisit": "2026-10-20",
+          "answered": ""
+        },
+        {
+          "on": "2026-10-10",
+          "body": "如果要换方案，之前的卡培他滨算第一线还是辅助治疗？",
+          "forVisit": "2026-10-20",
+          "answered": ""
+        },
+        {
+          "on": "2026-10-10",
+          "body": "现在这个体重掉得算快吗？要不要看营养门诊？",
+          "forVisit": "2026-10-20",
+          "answered": ""
+        }
+      ],
+      "tasks": [
+        {
+          "title": "整理 4 月的手术病理报告",
+          "dueOn": "2026-10-20",
+          "kind": "visit"
+        },
+        {
+          "title": "记录一周饮食与体重",
+          "dueOn": "2026-10-19",
+          "kind": "other"
+        }
+      ],
+      "viewpoints": [
+        {
+          "on": "2026-09-22",
+          "topic": "复发",
+          "body": "医生说影像上像转移，但没说是几期。我最想知道还能不能手术。",
+          "source": "self"
+        },
+        {
+          "on": "2026-10-01",
+          "topic": "体重",
+          "body": "他自己不觉得瘦，是裤腰松了才发现。",
+          "source": "caregiver"
+        }
+      ],
+      "decisions": [
+        {
+          "on": "2026-09-22",
+          "topic": "影像提示复发后的处理",
+          "reason": "肝上两枚新发结节，考虑转移，不适合再做手术，先讨论下一步方案",
+          "statedBy": "XX 医院肿瘤内科",
+          "source": "caregiver",
+          "metrics": [
+            [
+              "ca19_9",
+              "2026-09-22"
+            ],
+            [
+              "cea",
+              "2026-09-22"
+            ]
+          ]
+        }
+      ],
+      "flags": [
+        {
+          "metric": "ca19_9",
+          "on": "2026-10-14",
+          "kind": "value_question",
+          "note": "从 96 涨到 142，这说明什么？"
+        }
+      ],
+      "docs": [
+        {
+          "title": "胆囊切除标本病理",
+          "kind": "pathology",
+          "on": "2026-04-03",
+          "by": "XX 医院病理科",
+          "line": "胆囊腺癌，侵透肌层至浆膜下，pT3N1M0",
+          "trend": 0
+        },
+        {
+          "title": "分子检测报告",
+          "kind": "pathology",
+          "on": "2026-04-20",
+          "by": "XX 医院病理科分子室",
+          "line": "HER2 IHC 2+/FISH 未扩增，MSS，TMB 4.2 mut/Mb",
+          "trend": 0
+        },
+        {
+          "title": "上腹部 MRI 增强",
+          "kind": "imaging",
+          "on": "2026-09-22",
+          "by": "XX 医院影像科",
+          "line": "肝内新发两枚结节（S6 18 mm，S7 11 mm）",
+          "trend": 0
+        },
+        {
+          "title": "肿瘤标志物",
+          "kind": "lab",
+          "on": "2026-10-14",
+          "by": "XX 医院检验科",
+          "line": "CA19-9 142 U/mL，CEA 4.4 ng/mL",
+          "trend": 1
+        }
+      ]
+    }
+  ]
+}
