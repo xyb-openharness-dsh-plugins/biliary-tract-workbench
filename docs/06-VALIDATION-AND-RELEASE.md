@@ -49,6 +49,8 @@ dsh plugin --profile '<app 内部 profile>' add -w --save-exact 'file:/absolute/
 - CLI 短启验证 profile 时，错误列表里**没有自己包的名字**才算通过；存量包报错（版本倾斜、凭据格式）先对照实验（摘掉自己的包再启一次）排除，不要顺手改用户凭据文件。
 - cordis 对宿主 `apply` 的返回值严格检查：**必须非 async、返回 undefined**，实例走模块级单例 + 导出 getter 给测试；async resolve 普通对象直接 `Invalid effect`。
 
+- **本机实证（2026-10-26，胆道癌首装——同一个坑又踩了一次）**：先按 `dsh plugin --profile desktop add` 装进了 `~/.dsh/profiles/desktop`，重启后列表里没有，正是上文说的"名字带 desktop 但 app 不读"。改到 `harness/profiles/web` 照抄同族 `file:` tgz 登记（依赖 + `dsh.profile.bundles` 两处）、用 `corepack pnpm@10.34.5` 装（`+1`）、重启后 health 返 `{"ok":true,"version":"0.1.0",…}` 才算装到。误装那份已还原并删除。教训：**别照 profile 目录名推断，先 `cat harness/profiles/web/package.json` 看已装工作台长什么样**。
+
 若 CUA 看不到 Desktop 窗口，先用 app 自身受支持方式打开/检查；macOS 上可只读核验 `Contents/MacOS/<CFBundleExecutable>` 是否存在，并运行 `codesign --verify --deep --strict '<目标 Desktop.app>'`。如 Launch Services 返回启动错误或签名无效，记录原始结果和 app 版本，暂停宿主 UI 验收并交由 app 维护方恢复。不要通过改二进制、移除 quarantine、重签、重装覆盖或直接编辑 app bundle 来绕过；也不要把该宿主故障误判为工作台加载失败或工作台兼容证据。
 
 正常更新按最短路径执行：

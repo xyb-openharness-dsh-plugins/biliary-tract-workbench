@@ -144,3 +144,21 @@
   目录里有、README 没引用 → 报错；README 引用但文件不存在 → 报错。带 `*` 的通配写法当说明文字忽略。
   负向测试：故意放一张没引用的图 + 一条死链，两条都能拦下并给出改法。
 - 数量口径同步：README「20 屏 / 27 张」、证据文档「27 张 PNG，22 MB」「JPG 7.2 MB」、确认单与任务表同改。
+
+### 首次装入 DSH Desktop 实测（2026-10-26）
+
+- **包**：`npm pack` 产出 `dist/xyb-community-biliary-tract-workbench-0.1.0.tgz`（3.4 MB），清单只含 `dsh/`、`lib/`、`assets/`、`cordis.patch.yml`、`README.md`、`NOTICE.md`，无 `prototypes/`、无 `docs/`、无演示库。
+- **第一次装错了 profile（已还原）**：按 `dsh plugin --profile desktop add -w file:…tgz` 装进了 `~/.dsh/profiles/desktop`。
+  该目录名字里带 desktop，但 **DSH Desktop app 不读它**；app 读的是 `~/Library/Application Support/dsh-desktop/harness/profiles/web`。
+  已用安装前的 `package.json.bak-biliary-*` 还原该 profile 的依赖与 `bundles`，并删掉误装的 `node_modules/@xyb-community/biliary-tract-workbench`，避免"另一 profile 有意外安装"。
+- **正确装法**：在 app 的 profile 里照抄同族 `file:` tgz 的登记方式——`package.json` 的 `dependencies` 与 `dsh.profile.bundles` **两处都加**，
+  再用该 profile 自己声明的 pnpm 装（`packageManager: pnpm@10.34.5`，store 为 `~/Library/pnpm/store/v10`）：
+  `NODE_OPTIONS= corepack pnpm@10.34.5 install --prefer-offline`，输出 `+1`。
+  用全局 `pnpm 9.12.2` 会撞 `ERR_PNPM_UNEXPECTED_STORE`（store v3/v11 与 v10 不互通）。
+- **重启后实证（4 条，都可复现）**：
+  1. `GET /api/biliary-tract-workbench/health`（带 app 的 auth cookie）→ `{"ok":true,"version":"0.1.0","apiVersion":"v1","capabilities":["health"]}`；
+     同一端口随机路径只回裸 `unauthorized`，说明这条路由确实是本包的 handler 在应答。
+  2. 应用首页预载清单里出现 `@xyb-community/biliary-tract-workbench/client.js`，客户端模块被组合进宿主。
+  3. `harness/desktop-workbenches/state.json` 的 `added` 里有 `xyb-openharness-dsh-plugins/biliary-tract-workbench`（注册键取自 `repository.url`）。
+  4. 重启后的 harness 日志里没有本包的任何 error/warn；14:17 那两条 `cannot resolve profile bundle` 出现在装包完成之前，是 HMR 抢跑，不是安装失败。
+- **仍未验的**：界面里点开工作台卡片后的真实渲染与业务功能——当前 `lib/client.js` 还是接入骨架（只有标题、版本、连接状态、大字开关），业务页尚未接上 `prototypes/v0.2`。
