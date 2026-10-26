@@ -20,7 +20,7 @@
     "NOTICE.md"
   ],
   "scripts": {
-    "check": "node --check dsh/index.js && node --check lib/client.js && node --check lib/layout.js && node --check prototypes/v0.2/app.js && node scripts/build-version.mjs --check && node --test test/*.test.mjs && node scripts/check-schema.mjs . && node scripts/check-medical-rules.mjs . && node scripts/check-wording.mjs . && node scripts/check-workbench-package.mjs . && node scripts/check-readme-shots.mjs .",
+    "check": "node --check dsh/index.js && node --check lib/client.js && node --check lib/layout.js && node --check prototypes/v0.2/app.js && node scripts/build-version.mjs --check && node --test test/*.test.mjs && node scripts/check-schema.mjs . && node scripts/check-medical-rules.mjs . && node scripts/check-wording.mjs . && node scripts/check-workbench-package.mjs . && node scripts/check-readme.mjs . && node scripts/check-readme-shots.mjs .",
     "check:schema": "node scripts/check-schema.mjs .",
     "build:demo": "node --disable-warning=ExperimentalWarning demo/build-demo-data.mjs",
     "audit": "node scripts/check-conformance.mjs .",
@@ -35,7 +35,8 @@
     "build:version": "node scripts/build-version.mjs",
     "check:version": "node scripts/build-version.mjs --check",
     "test": "node --test test/*.test.mjs",
-    "check:shots": "node scripts/check-readme-shots.mjs ."
+    "check:shots": "node scripts/check-readme-shots.mjs .",
+    "check:readme": "node scripts/check-readme.mjs ."
   },
   "dsh": {
     "bundle": {
