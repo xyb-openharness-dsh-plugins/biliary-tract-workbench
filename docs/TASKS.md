@@ -11,6 +11,7 @@
 
 | ID | 业务单元 | 前置依赖 | 拥有文件/模块 | 实现/检查要求 | 证据 | 状态 |
 | --- | --- | --- | --- | --- | --- | --- |
+| T00 | 家族结构（P0） | — | `lib/version.js`、`lib/layout.js`、`test/`、`docs/DEV-PLAN.md` | `npm run audit` 0 fail；版本/布局/单测进检查链 | audit 30/32 · 0 fail · 2 待人工（T10 未开工，已在 DEV-REQUIREMENTS §八 逐条回复） | ✅ 已具备 |
 | T01 | 接入基线 | BRIEF/SPEC | `dsh/index.js`、`lib/client.js`、`cordis.patch.yml`、`package.json` | 实际包可被目标宿主加载；健康接口可用；包结构校验通过 | 脚手架产物，仅注册骨架、无业务逻辑；`npm run check` 绿 | ✅ 已具备（脚手架） |
 | T02 | 数据层与迁移 | T01 + G3 签认 | `src/store/`、`src/migrations/`、schema 冻结副本 | 旧库兼容、`_migration` 记账、触发器与 CHECK 生效；以 `schema/0001_initial.sql` 为唯一来源，不手改库 | 演示库已能按 36 表建起（`npm run build:demo`）；**G3 未签，不得开工** | ⛔ 阻塞（G3） |
 | T03 | 共享 UI 组件 | 原型冻结 + API 合同 | `src/components/` | 翻面卡、折线图、状态徽章、弹窗、空态、三态、折叠；视觉对齐 `prototypes/v0.2/style.css` 的令牌 | 原型已验证组件形态（`22-chart-flip.png` 等）；未迁到 `src/` | ⛔ 阻塞（G2） |
@@ -24,7 +25,8 @@
 
 ## 当前失败/复现
 
-无。`npm run check` 四项全绿：冻结合同哈希一致（1 条迁移 / 1 条登记）、文案红线 0 命中、包结构通过、`node --check` 通过。
+无。`npm run check` 全绿：语法 / 版本布局一致 / 13 条单测 / 冻结合同哈希 / 11 条口径 / 文案红线 / 包结构。
+`npm run audit` = 30/32 · 0 fail · 2 待人工（两条都因原生 Agent 面板未实现，处置见 `DEV-REQUIREMENTS` §八）。
 
 ## 未验证项
 

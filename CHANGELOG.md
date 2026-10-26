@@ -92,3 +92,19 @@
   图片放 `docs/screenshots/`（27 张 JPEG，7.1 MB，**入库**），原图 PNG 仍在 `prototypes/_evidence/`（21 MB，不入库，`npm run probe:proto` 可重现）。
   新增 `scripts/sync-screenshots.mjs`（`npm run shots:sync`）：从原图批量压到 1440 宽，macOS 用 `sips`，其它平台用 ImageMagick。
 - **文档同步**：`PROTOTYPE-REVIEW.md` / `TASKS.md` / `G2-CONFIRM-SHEET.md` 的原型哈希更新为 `96d176a9…`（本轮改了 `app.js`）。
+
+### 家族结构补齐 + git 首次提交（2026-10-26）
+
+- **`npm run audit` 从 23/30·7 fail → 30/32·0 fail·2 待人工**。补齐项：
+  - `lib/version.js`（生成物）：版本四处一致的第三处，由 `npm run build:version` 从 `VERSION` 生成。
+  - `lib/layout.js`（面板唯一来源，H15）：`PANEL.customFrame=true`、`businessWidth=0.65`、`AGENT_PANE 0.28–0.45`；
+    由构建注入 `lib/client.js` 的 `layout:begin/end` 标记块，客户端注册改用 `layout.customFrame`，不再自带第二份默认值。
+  - `test/`：13 条用例——布局区间 4 条、版本一致 3 条、演示数据不变量 6 条（DBIL≤TBIL、ULN 上限可解析、分型四型、可切除性无判定字段、试验无核验日期不得标招募中、硬性条件必须有结构化判据）。
+  - 检查链补齐「单测」`node --test test/*.test.mjs` 与「版本一致」`build-version.mjs --check`。
+  - `docs/DEV-PLAN.md`：从「怎么排、每步怎么算做完」写到风险与 DoD，含 P4 内部实施顺序（先 labs）。
+- **口径校验扩到 11 条**：新增 **M1**（不自创轻/中/重，引用 CTCAE 与 ×ULN 区间）与 **M10**（报告只索引不解读）。
+  期间修掉两处误判：整文件扫描替代按函数切片（页面正文多在 helper 里，`vLabs` 切片只有 146 字符）、
+  「提示复发」属试验入排条件的标准写法不计违规。
+- **git 首次提交**：`3336f46`（`main`），211 个文件、`.git` 9.4 MB；`.gitignore` 已挡住 `node_modules/`、`*.sqlite`、`prototypes/_evidence/`、`.workbuddy/`。
+  **未配置远端、未 push。**
+- **两条 audit warn 的处置**记入 `docs/DEV-REQUIREMENTS-2026-10-24.md` 第八节：会话归属/常挂载属「确实没有」（T10 未开工），并写明 T10 一开工必须转 pass、不许继续引用该表。

@@ -43,8 +43,22 @@ function forbid(sliceName, words) {
       if (!l.includes(w)) continue;
       // 否定语境豁免："这一屏不写分诊等级"「不折算成急症等级」是在声明规则，不是违规。
       // 只在同一个短句内（≤12 字）出现否定词才算豁免，防止把真违规整行放过。
-      if (new RegExp(`(不写|不判|不折算|不做|不给|不生成|不是|没有)[^，。；]{0,12}${w}`).test(l)) continue;
+      if (new RegExp(`(不写|不判|不折算|不做|不给|不生成|不总结|不读|不解读|不是|没有)[^，。；]{0,12}${w}`).test(l)) continue;
       hits.push({ slice: sliceName, line: i + 1, word: w, text: l.trim().slice(0, 90) });
+    }
+  });
+  return hits;
+}
+
+/** 整文件扫描：页面正文常写在 helper 函数里，按页面函数切片会漏 */
+function forbidAll(words) {
+  const hits = [];
+  appJs.split('\n').forEach((l, i) => {
+    if (l.includes('wording-ok')) return;
+    for (const w of words) {
+      if (!l.includes(w)) continue;
+      if (new RegExp(`(不写|不判|不折算|不做|不给|不生成|不总结|不读|不解读|不是|没有)[^，。；]{0,12}${w}`).test(l)) continue;
+      hits.push({ slice: 'app.js', line: i + 1, word: w, text: l.trim().slice(0, 80) });
     }
   });
   return hits;
@@ -53,6 +67,17 @@ function forbid(sliceName, words) {
 const results = [];
 const add = (id, name, ok, detail, approx = false) =>
   results.push({ id, name, ok, detail, approx });
+
+/* ---------- M1 · 分级只用「对照」，不自创轻/中/重 ---------- */
+{
+  const invented = ['轻度', '中度', '重度'].filter((w) => appJs.includes(w))
+  const hasCtcae = /CTCAE/.test(appJs)
+  const hasRange = /×ULN/.test(appJs)
+  // 当前原型里分级整块是「未引入」（缺页码），所以判据是：不自创分级词 + 引用了 CTCAE 名称与区间写法
+  add('M1', '分级用 CTCAE 对照，不自创轻/中/重', invented.length === 0 && hasCtcae && hasRange,
+    invented.length ? `出现自创分级词：${invented.join(' / ')}`
+      : `CTCAE 出现=${hasCtcae}，×ULN 区间写法出现=${hasRange}（当前整块为「未引入」）`);
+}
 
 /* ---------- M2 · ×ULN 只用本单 ref_high ---------- */
 {
@@ -148,6 +173,17 @@ const add = (id, name, ok, detail, approx = false) =>
     hits.length ? hits.map((h) => `${h.slice}:${h.line}「${h.word}」`).slice(0, 5).join(' ; ') : 'vDash / vChart 切片内 0 命中（与 check-wording.mjs 独立复核）');
 }
 
+/* ---------- M10 · 报告只索引不解读 ---------- */
+{
+  // 「提示复发」在试验入排条件里是标准写法（影像判据），不算产品解读，故不列入
+  const words = ['报告说没事', '报告正常', '没有问题', '解读为', '说明复发'];
+  const hits = forbidAll(words);
+  const saysOk = /报告(显示)?(一切)?正常/.test(appJs);
+  add('M10', '报告只索引，不做解读', hits.length === 0 && !saysOk,
+    hits.length ? hits.map((h) => `${h.slice}:${h.line}「${h.word}」`).slice(0, 5).join(' ; ')
+      : (saysOk ? '出现"报告正常"式结论' : 'vLabs / vImaging 切片内 0 命中'));
+}
+
 /* ---------- M12 · 总胆红素/直接胆红素不混称（回归项） ---------- */
 {
   const lines = appJs.split('\n');
@@ -163,7 +199,7 @@ const add = (id, name, ok, detail, approx = false) =>
 
 /* ---------- 输出 ---------- */
 let fail = 0;
-console.log('医学口径校验（M2–M9，附 M12 回归）：');
+console.log('医学口径校验（M1–M13）：');
 for (const r of results) {
   if (!r.ok) fail += 1;
   console.log(`  ${r.ok ? '✓' : '✗'} ${r.id} ${r.name}${r.approx ? '（近似）' : ''} —— ${r.detail}`);
