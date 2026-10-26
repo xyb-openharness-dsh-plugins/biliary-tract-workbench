@@ -87,6 +87,48 @@ await new Promise((r) => setTimeout(r, 600));
 await page.screenshot({ path: join(OUT, '22-chart-flip.png'), fullPage: true });
 console.log('一图秀：', JSON.stringify(chartInfo));
 
+// 一图秀：数据点提示（悬浮 / 点按看那一天的原始值与本单上限）
+await go('chart');
+const chartPt = await page.evaluate(() => {
+  const list = document.querySelectorAll('svg.chart circle.pt');
+  const pt = list[Math.floor(list.length / 2)];
+  if (!pt) return { ok: false, n: 0 };
+  pt.scrollIntoView({ block: 'center' });
+  const r = pt.getBoundingClientRect();
+  return { ok: true, n: list.length, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+});
+if (chartPt.ok) {
+  await page.mouse.move(chartPt.x, chartPt.y);
+  await new Promise((r) => setTimeout(r, 350));
+  const tip = await page.evaluate(() => {
+    const t = document.querySelector('.chart-tip');
+    return t && t.classList.contains('on') ? t.innerText.replace(/\n/g, ' | ') : '';
+  });
+  console.log('一图秀点数：', chartPt.n, '· 悬浮提示：', tip || '未出现');
+  await page.screenshot({ path: join(OUT, '25-chart-hover.png') });
+} else console.log('一图秀：没有找到数据点');
+
+// 黄疸页：柱条提示 + 症状程度折线
+await go('jaundice');
+const barPt = await page.evaluate(() => {
+  const list = document.querySelectorAll('.drain-bars .bar');
+  const b = list[list.length - 1];
+  if (!b) return { ok: false };
+  b.scrollIntoView({ block: 'center' });
+  const r = b.getBoundingClientRect();
+  return { ok: true, n: list.length, sym: document.querySelectorAll('svg.sym-chart circle.pt').length, rev: document.querySelectorAll('.drain-bars .ref').length, x: r.left + r.width / 2, y: r.top + r.height / 2 };
+});
+if (barPt.ok) {
+  await page.mouse.move(barPt.x, barPt.y);
+  await new Promise((r) => setTimeout(r, 320));
+  const tip = await page.evaluate(() => {
+    const t = document.querySelector('.chart-tip');
+    return t && t.classList.contains('on') ? t.innerText.replace(/\n/g, ' | ') : '';
+  });
+  console.log('黄疸柱条：', barPt.n, '条 · 上限虚线：', barPt.rev, '· 症状折线点：', barPt.sym, '· 悬浮提示：', tip || '未出现');
+  await page.screenshot({ path: join(OUT, '26-jaundice-hover.png') });
+}
+
 // 临床试验：匹配数量 / 收藏 / 偏好切换
 await go('trials');
 await page.evaluate(() => { document.querySelectorAll('.subnav button')[0].click(); });

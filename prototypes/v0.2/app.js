@@ -112,6 +112,9 @@ const prev = (m) => { const a = pts(m); return a.length > 1 ? a[a.length - 2] : 
 const diff = (m) => { const a = last(m), b = prev(m); return a && b ? a.v - b.v : null; };
 const uln = (m, v) => (m.refHigh ? v / m.refHigh : null);
 const fmtUln = (x) => (x === null || x === undefined ? '—' : `${x < 10 ? x.toFixed(1) : Math.round(x)}×ULN`);
+/* 数据点提示的公共内容：只说"什么指标、哪天、多少、本单上限多少"，不写"好/差" */
+const refText = (m) => (m.refHigh ? `本单参考上限 ${m.refHigh} ${m.unit}` : m.refLow ? `本单参考下限 ${m.refLow} ${m.unit}` : '本单未登记参考范围');
+const tipAttrs = (m, p) => `data-tip="1" data-d="${esc(p.d)}" data-name="${esc(m.name)}" data-v="${esc(fmtNum(p.v, m.dec))}" data-u="${esc(m.unit)}" data-ref="${esc(refText(m))}" aria-label="${esc(`${p.d} ${m.name} ${fmtNum(p.v, m.dec)} ${m.unit}，${refText(m)}`)}"`;
 const dayGap = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400000);
 // 日期差只说"过了几天 / 还有几天"，不写"还有 -4 天"这种负数（DASH-03）
 const gapText = (gap) => (gap > 0 ? `还有 ${gap} 天` : gap === 0 ? '就是今天' : `已经过了 ${-gap} 天`);
@@ -304,19 +307,56 @@ function vType() {
 }
 
 /* ---------------- 黄疸与梗阻（JAU-01~03） ---------------- */
+/* JAU-01：程度自评 0–10 的折线。只连同一种症状自己的记录，不插值、不跨症状连线 */
+function symptomChart(sym) {
+  if (!sym.length) return '';
+  const W = 470, H = 138, X0 = 26, X1 = W - 8, Y0 = 8, Y1 = H - 26;
+  const PALETTE = ['#a9761c', '#7e6a2c', '#a03d5c', '#5d6f4a', '#6b5b8a'];
+  const names = [...new Set(sym.map((s) => s.symptom))];
+  const ds = sym.map((s) => s.on).sort();
+  const t0 = Date.parse(ds[0]), t1 = Date.parse(ds[ds.length - 1]);
+  const x = (d) => (t1 === t0 ? (X0 + X1) / 2 : X0 + (Date.parse(d) - t0) / (t1 - t0) * (X1 - X0));
+  const y = (v) => Y1 - Math.min(10, Math.max(0, v)) / 10 * (Y1 - Y0);
+  const grid = [0, 5, 10].map((v) => `<line class="grid" x1="${X0}" x2="${X1}" y1="${y(v).toFixed(1)}" y2="${y(v).toFixed(1)}"/><text class="yl" x="0" y="${(y(v) + 3).toFixed(1)}">${v}</text>`).join('');
+  const series = names.map((n, i) => {
+    const rows = sym.filter((s) => s.symptom === n).sort((a, b) => a.on.localeCompare(b.on));
+    const c = PALETTE[i % PALETTE.length];
+    const co = rows.map((s) => ({ x: x(s.on), y: y(s.severity) }));
+    const line = co.length > 1 ? `<path class="line" d="${co.map((p, k) => `${k ? 'L' : 'M'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ')}" stroke="${c}"/>` : '';
+    const dots = rows.map((s, k) => `<circle class="pt" cx="${co[k].x.toFixed(1)}" cy="${co[k].y.toFixed(1)}" r="4.6" fill="${c}"
+      data-tip="1" data-d="${esc(s.on)}" data-name="${esc(s.symptom)}" data-v="${s.severity}" data-u="/ 10（自评）"
+      data-ref="${esc(s.note ? `当时备注：${s.note}` : '这条没写备注')}"
+      aria-label="${esc(`${s.on} ${s.symptom} 自评 ${s.severity}/10`)}"><title>${esc(`${s.on} · ${s.symptom} ${s.severity}/10`)}</title></circle>`).join('');
+    return `<g>${line}${dots}</g>`;
+  }).join('');
+  const legend = names.map((n, i) => `<span><i style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${PALETTE[i % PALETTE.length]};margin-right:4px"></i>${esc(n)}</span>`).join('');
+  return `<svg class="sym-chart" viewBox="0 0 ${W} ${H}" role="img" aria-label="症状程度自评的时序折线，纵轴 0 到 10，共 ${sym.length} 条记录">
+    ${grid}${series}
+    <text class="tick" x="${X0}" y="${H - 8}">${esc(ds[0].slice(2))}</text>
+    <text class="tick" x="${X1}" y="${H - 8}" text-anchor="end">${esc(ds[ds.length - 1].slice(2))}</text>
+    <text class="cap" x="${X0}" y="${Y0 - 1}">纵轴：你自己打的程度（0–10）</text>
+  </svg>
+  <div class="spark-labels" style="margin-bottom:8px">${legend}</div>`;
+}
+
 function bilirubinChart() {
   const m = MET().bilirubin_total;
   if (!m) return `<div class="empty"><h3>暂无总胆红素记录</h3><p>记一次化验后这里会出现柱条</p></div>`;
   const a = pts(m);
-  const max = Math.max(...a.map((p) => p.v), m.refHigh || 0);
-  const W = 100 / a.length;
+  const peak = Math.max(...a.map((p) => p.v), m.refHigh || 0, 1);
+  const max = peak * 1.08;                       // 留一点头顶空间给数值标签和上限虚线
+  /* 柱高百分比是相对柱条区内容高算的：容器 132px − 上内边距 10px = 122px */
+  const barsInnerH = 122;
+  const refBottom = m.refHigh ? (m.refHigh / max) * barsInnerH : 0;
   const db = MET().direct_bilirubin;
   const dbl = db ? last(db) : null;
-  return `<div class="drain-bars" style="height:132px">${a.map((p) => {
+  return `<div class="drain-bars" style="height:132px">
+    ${m.refHigh ? `<div class="ref" style="bottom:${refBottom.toFixed(1)}px"><em>本单上限 ${m.refHigh}</em></div>` : ''}
+    ${a.map((p) => {
     const h = Math.max(3, (p.v / max) * 100);
-    return `<div class="bar" title="${esc(p.d)} · 总胆红素 ${dec(p.v)} μmol/L"><em>${dec(p.v)}</em><i style="height:${h}%;background:${m.color}"></i><span>${esc(p.d.slice(5))}</span></div>`;
+    return `<div class="bar" ${tipAttrs(m, p)}><em>${dec(p.v)}</em><i style="height:${h}%;background:${m.color}"></i><span>${esc(p.d.slice(5))}</span></div>`;
   }).join('')}</div>
-  <div class="small-note">${m.refHigh ? `虚线来自这张化验单自带的参考上限 ${m.refHigh} ${esc(m.unit)}；换个实验室，上限可能不一样。` : '这张单未登记参考上限，所以只列值与日期。'}
+  <div class="small-note">${m.refHigh ? `虚线来自这张化验单自带的参考上限 ${m.refHigh} ${esc(m.unit)}；换个实验室，上限可能不一样。把鼠标放到柱子上，或点一下柱子，能看到那一天的原始值与本单上限。` : '这张单未登记参考上限，所以只列值与日期。'}
   柱条不做连线：中间缺测的日子，连起来会把缺口抹平。</div>
   <div class="notice plain" style="margin:12px 0 0"><b>这一屏画的是总胆红素（TBIL），不是"胆红素"。</b>
     ${dbl ? `同一张单上直接胆红素（DBIL）是 <b>${dec(dbl.v)} ${esc(db.unit)}</b>（${esc(dbl.d)}）。` : ''}
@@ -335,10 +375,11 @@ function vJaundice() {
       </section>
       <section class="card">
         <div class="card-head"><div><h2>症状记录</h2><p>JAU-01 · 自己填的，不是医生下的诊断</p></div></div>
-        ${sym.length ? `<div class="table-wrap"><table><thead><tr><th>日期</th><th>症状</th><th>程度自评</th><th>备注</th></tr></thead><tbody>
+        ${sym.length ? `${symptomChart(sym)}
+        <div class="table-wrap" style="margin-top:6px"><table><thead><tr><th>日期</th><th>症状</th><th>程度自评</th><th>备注</th></tr></thead><tbody>
           ${sym.map((s) => `<tr><td class="num">${esc(s.on)}</td><td><b>${esc(s.symptom)}</b></td><td class="num">${s.severity} / 10</td><td>${esc(s.note)}</td></tr>`).join('')}
         </tbody></table></div>` : `<div class="empty"><h3>暂无症状记录</h3></div>`}
-        <div class="small-note">自评分数只表示"你自己觉得的程度"，不是医学分级。</div>
+        <div class="small-note">折线只连同一种症状自己的记录，缺记的日子留白，不插值。自评分数只表示"你自己觉得的程度"，不是医学分级；点一下折线上的点，能看到那天的原始打分与备注。</div>
       </section>
       <section class="card">
         <div class="card-head"><div><h2>发热与寒战</h2><p>JAU-01 · 照原话记：体温、持续多久、你做了什么</p></div></div>
@@ -351,8 +392,11 @@ function vJaundice() {
       </section>
       <section class="card wide">
         <div class="card-head"><div><h2>这些指标在查什么</h2><p>JAU-03 · 解释的是检查项目本身，不是你的结果</p></div></div>
-        <div class="gate"><i>!</i><div><b>这一段先不显示。</b>要解释"总胆红素/直接胆红素/ALP/GGT 各查什么"，必须同时给出<b>机构 + 版本 + 页码</b>。当前库里缺<span class="miss">页码</span>，所以整块按「未引入」处理。
-          <div style="margin-top:6px">缺一个就不显示，是因为少了页码的解释，读者没法自己回去核对——那还不如不说。</div></div></div>
+        <details class="why-fold">
+          <summary>这一段先不显示 · 点开看原因</summary>
+          <div class="gate"><i>!</i><div><b>这一段先不显示。</b>要解释"总胆红素/直接胆红素/ALP/GGT 各查什么"，必须同时给出<b>机构 + 版本 + 页码</b>。当前库里缺<span class="miss">页码</span>，所以整块按「未引入」处理。
+            <div style="margin-top:6px">缺一个就不显示，是因为少了页码的解释，读者没法自己回去核对——那还不如不说。</div></div></div>
+        </details>
         <div class="small-note">同一屏还必须写明：这里讲的是检查项目，不是你的这一份结果。</div>
       </section>
     </div>`;
@@ -701,21 +745,26 @@ function chartSVG(t0, t1) {
   }).sort((a, b) => a.y - b.y);
   let cursor = -Infinity;
   for (const it of lastPos) { it.ly = Math.max(it.y, cursor + 13); cursor = it.ly; }
-  const over = lastPos.length ? Math.max(0, lastPos[lastPos.length - 1].ly - (CY1 + 2)) : 0;
+  const over = lastPos.length ? Math.max(0, lastPos[lastPos.length - 1].ly - (CY1 - 8)) : 0;
   if (over) for (const it of lastPos) it.ly -= over;
   const lines = sel.map((s) => {
     const coords = s.pts.map((p) => ({ x: xOf(Date.parse(p.d), t0, t1), y: yOf(s, p.v) }));
     const path = s.pts.length > 1 ? `<path class="line" d="${smoothPath(coords)}" stroke="${s.m.color}" pathLength="1"/>` : '';
-    const points = coords.map((c, i) => `<circle class="pt" cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${i === s.pts.length - 1 ? 5.2 : 4}" fill="${s.m.color}"/>`).join('');
+    /* 每个点都画出来：小圆点是"这天记过一次"，外面再套一个透明大圈，鼠标不用瞄准 */
+    const hits = coords.map((c, i) => `<circle class="pt-hit" cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="13" ${tipAttrs(s.m, s.pts[i])}/>`).join('');
+    const points = coords.map((c, i) => `<circle class="pt" cx="${c.x.toFixed(1)}" cy="${c.y.toFixed(1)}" r="${i === s.pts.length - 1 ? 5.6 : 4.2}" fill="${s.m.color}" ${tipAttrs(s.m, s.pts[i])}/>`).join('');
     const lp = lastPos.find((x) => x.s === s);
-    const nearRight = lp.x > CX1 - 44;
-    return `<g>${path}${points}<text class="delta-tag" x="${(nearRight ? lp.x - 8 : lp.x + 8).toFixed(1)}" y="${(lp.ly + 4).toFixed(1)}" text-anchor="${nearRight ? 'end' : 'start'}" fill="${s.m.color}">${fmtNum(lp.v, s.m.dec)}</text></g>`;
+    const nearRight = lp.x > CX1 - 52;
+    const leader = Math.abs(lp.ly - lp.y) > 1.5
+      ? `<line class="leader" x1="${lp.x.toFixed(1)}" x2="${(nearRight ? lp.x - 6 : lp.x + 6).toFixed(1)}" y1="${lp.y.toFixed(1)}" y2="${lp.ly.toFixed(1)}" stroke="${s.m.color}"/>`
+      : '';
+    return `<g>${path}${hits}${leader}${points}<text class="delta-tag" x="${(nearRight ? lp.x - 9 : lp.x + 9).toFixed(1)}" y="${(lp.ly + 4).toFixed(1)}" text-anchor="${nearRight ? 'end' : 'start'}" fill="${s.m.color}">${esc(s.m.short)} ${fmtNum(lp.v, s.m.dec)}</text></g>`;
   }).join('');
   const ticks = monthTicks(t0, t1).map((t) => `<line class="axis" x1="${t.x.toFixed(1)}" x2="${t.x.toFixed(1)}" y1="${CY1}" y2="${CY1 + 5}"/><text class="tick" x="${t.x.toFixed(1)}" y="${CY1 + 18}" text-anchor="middle">${t.label}</text>`).join('');
   return `<svg class="chart" viewBox="0 0 ${CW} ${CH}" role="img" aria-label="所选指标的时序图，共 ${sel.length} 条序列">
     ${grid}${ticks}${marks}${strip}${lines}
     <text x="6" y="34" font-size="9" fill="#9c9483">治疗</text>
-    <text class="tick" x="${CX0}" y="${CY1 + 36}">各序列按自身全部记录的最小值–最大值归一化，不代表数值可比</text>
+    <text class="tick" x="${CX0}" y="${CY1 + 36}">各序列按自身全部记录的最小值–最大值归一化，不代表数值可比 · 每个圆点是一次记录，悬浮或点按可看那天的原始值</text>
   </svg>`;
 }
 
@@ -726,7 +775,15 @@ function mcard(code) {
   const sp = pts(m);
   const lo = Math.min(...sp.map((p) => p.v)), hi = Math.max(...sp.map((p) => p.v));
   const w = 200, h = 54;
-  const path = sp.length > 1 ? smoothPath(sp.map((p, i) => ({ x: (i / (sp.length - 1)) * w, y: h - ((p.v - lo) / (hi - lo || 1)) * (h - 6) - 3 }))) : '';
+  const sy = (v) => h - ((v - lo) / (hi - lo || 1)) * (h - 6) - 3;
+  const path = sp.length > 1 ? smoothPath(sp.map((p, i) => ({ x: (i / (sp.length - 1)) * w, y: sy(p.v) }))) : '';
+  /* 迷你折线上的点用 HTML 定位：SVG 不等比缩放会把圆点拉成椭圆 */
+  const sdots = sp.map((p, i) => {
+    const l = sp.length > 1 ? (i / (sp.length - 1)) * 100 : 50;
+    return `<i class="sp-dot" style="left:${l.toFixed(1)}%;top:${(sy(p.v) / h * 100).toFixed(1)}%;background:${m.color}"
+      data-tip="1" data-d="${esc(p.d)}" data-name="${esc(m.name)}" data-v="${esc(fmtNum(p.v, m.dec))}" data-u="${esc(m.unit)}" data-ref="${esc(refText(m))}"
+      aria-label="${esc(`${p.d} ${m.name} ${fmtNum(p.v, m.dec)} ${m.unit}`)}"></i>`;
+  }).join('');
   return `<button class="mcard" data-action="flip" data-code="${code}" data-flipped="${flipped}" aria-pressed="${flipped}" aria-label="${esc(m.name)}：点按翻面看记录清单">
     <span class="mcard-inner">
       <span class="mface">
@@ -734,7 +791,9 @@ function mcard(code) {
         <span class="name">${esc(m.name)}</span>
         <span class="val">${dec(a.v, m.dec)}<small>${esc(m.unit)}</small></span>
         <span class="delta">${d === null ? '只有 1 次记录' : `与上次 <em>${d > 0 ? '+' : ''}${dec(d, m.dec)}</em>`} · ${esc(a.d)}</span>
-        <span class="rec">${sp.length > 1 ? `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none"><path class="sp-line" d="${path}" stroke="${m.color}"/></svg>` : `<span class="hint">只有 1 次记录，暂不连线</span>`}</span>
+        <span class="rec">${sp.length > 1
+          ? `<span class="spark-wrap"><svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true"><path class="sp-line" d="${path}" stroke="${m.color}"/></svg>${sdots}</span>`
+          : `<span class="hint">只有 1 次记录，暂不连线</span>`}</span>
         <span class="meta"><span>${m.refHigh ? `参考上限 ${m.refHigh}` : m.refLow ? `参考下限 ${m.refLow}` : '未登记参考范围'}</span><span class="hint">点卡片翻面 →</span></span>
       </span>
       <span class="mface back">
@@ -1186,6 +1245,56 @@ document.addEventListener('input', (e) => {
   window.__tq = setTimeout(() => { render(); const q = $('#trial-q'); if (q) { q.focus(); q.setSelectionRange(q.value.length, q.value.length); } }, 220);
 });
 
+/* ---------------- 数据点提示（悬浮 / 键盘聚焦 / 点按都能看到） ----------------
+   只说事实：哪天、什么指标、多少、本单上限多少。不写评价性的词。 */
+let tipEl = null;
+function ensureTip() {
+  if (!tipEl) {
+    tipEl = document.createElement('div');
+    tipEl.className = 'chart-tip';
+    tipEl.setAttribute('role', 'tooltip');
+    document.body.appendChild(tipEl);
+  }
+  return tipEl;
+}
+function placeTip(x, y) {
+  const pad = 100;
+  tipEl.style.left = `${Math.max(pad, Math.min(window.innerWidth - pad, x))}px`;
+  tipEl.style.top = `${Math.max(56, y)}px`;
+  /* 靠近页面顶部时翻到指针下方，否则气泡会盖住标题或数据点本身 */
+  tipEl.classList.toggle('below', y < 200);
+}
+function showTip(el, x, y) {
+  const d = el.dataset;
+  const t = ensureTip();
+  t.innerHTML = `<b>${esc(d.d || '')} · ${esc(d.name || '')}</b><br>${esc(d.v || '—')} <span class="dim">${esc(d.u || '')}</span>${d.ref ? `<div class="src">${esc(d.ref)}</div>` : ''}`;
+  placeTip(x, y);
+  t.classList.add('on');
+}
+function hideTip() { if (tipEl) tipEl.classList.remove('on'); }
+
+document.addEventListener('pointerover', (e) => {
+  const el = e.target && e.target.closest ? e.target.closest('[data-tip]') : null;
+  if (el) showTip(el, e.clientX, e.clientY);
+});
+document.addEventListener('pointermove', (e) => {
+  if (!tipEl || !tipEl.classList.contains('on')) return 0;
+  if (!e.target || !e.target.closest || !e.target.closest('[data-tip]')) return;
+  placeTip(e.clientX, e.clientY);
+});
+document.addEventListener('pointerout', (e) => {
+  if (e.target && e.target.closest && e.target.closest('[data-tip]')) hideTip();
+});
+document.addEventListener('focusin', (e) => {
+  const el = e.target && e.target.closest ? e.target.closest('[data-tip]') : null;
+  if (!el) return;
+  const r = el.getBoundingClientRect();
+  showTip(el, r.left + r.width / 2, r.top);
+});
+document.addEventListener('focusout', (e) => {
+  if (e.target && e.target.closest && e.target.closest('[data-tip]')) hideTip();
+});
+
 const VIEWS = { dash: vDash, type: vType, jaundice: vJaundice, drain: vDrain, treat: vTreat, labs: vLabs, imaging: vImaging, chart: vChart, trials: vTrials, care: vCare, settings: vSettings };
 
 
@@ -1204,6 +1313,7 @@ function render() {
   $('#breadcrumb').textContent = PAGES.find((p) => p[0] === state.view)[1];
   const main = $('#main');
   main.innerHTML = `<div class="page-enter">${VIEWS[state.view]()}</div>`;
+  hideTip();
   document.body.classList.toggle('large', state.font > 1.15);
   document.documentElement.style.setProperty('--font', `${15 * state.font}px`);
   $('#font-toggle').setAttribute('aria-pressed', String(state.font > 1));

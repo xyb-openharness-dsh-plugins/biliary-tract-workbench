@@ -63,7 +63,7 @@
 - **没有业务代码**：`dsh/` 与 `lib/` 仍只有注册骨架，G2 通过前不写业务逻辑。
 - **有演示数据，但不是真实患者**：`demo/` 里两套**合成**档案（肝门部 pCC 减黄后手术 / 胆囊癌术后影像复发）与 10 条**合成**试验（注册号 `DEMO-` 前缀），只用于原型走查与库结构验证；`*.sqlite` 不入库，随时可由 `npm run build:demo` 重建。
 
-## 原型截图（20 屏 / 27 张）
+## 原型截图（20 屏 / 29 张）
 
 当前原型的实机截图（Chrome 145 真实内核，1440×900）；每张都可以点开看原尺寸。原型**不接 DSH、不落库、无 AI**，刷新即重置。逐条走查进度见 [G2 确认表](docs/G2-CONFIRM-SHEET.md)，证据与限制见 [原型证据](docs/PROTOTYPE-EVIDENCE.md)。
 
@@ -82,9 +82,11 @@
 <img src="docs/screenshots/02-type.jpg" width="100%">
 
 ### 黄疸与梗阻
-胆红素柱条不连线（缺测的日子不被填平）；"检查项目说明"整块显示**未引入**，因为库里没有带页码的原件。
+胆红素柱条不连线（缺测的日子不被填平），本单参考上限画成虚线；症状折线只连同一种症状自己的记录；"检查项目说明"折叠起来，因为库里没有带页码的原件。悬浮或点按任意柱子，能看到那一天的原始值与本单上限。
 
-<img src="docs/screenshots/03-jaundice.jpg" width="100%">
+<img src="docs/screenshots/03-jaundice.jpg" width="49%"> <img src="docs/screenshots/26-jaundice-hover.jpg" width="49%">
+
+*右：气泡显示「2026-10-12 · 总胆红素 / 17 μmol/L / 本单参考上限 21 μmol/L」。*
 
 ### 引流照护
 管子拆成置入 / 换管 / 拔除三条事件；每日量用柱条；观察项只写体温与当时的处理。
@@ -113,9 +115,12 @@
 <img src="docs/screenshots/07-imaging.jpg" width="100%">
 
 ### 一图秀
-三序列归一化折线 + 治疗色带 + 评估竖线；指标卡可翻面看记录清单；同时画的上限 4 条。
+三序列归一化折线 + 治疗色带 + 评估竖线；每个数据点都画出来，悬浮或点按看那天的原始值与本单上限；指标卡可翻面看记录清单；同时画的上限 4 条。
 
-<img src="docs/screenshots/08-chart.jpg" width="49%"> <img src="docs/screenshots/22-chart-flip.jpg" width="49%">
+<img src="docs/screenshots/08-chart.jpg" width="49%"> <img src="docs/screenshots/25-chart-hover.jpg" width="49%">
+<img src="docs/screenshots/22-chart-flip.jpg" width="49%">
+
+*右上：气泡显示「2026-06-16 · CA19-9 / 122 U/mL / 本单参考上限 37 U/mL」。*
 
 ### 临床试验：匹配 / 检索 / 收藏与跟踪
 8 项病理特点带日期与来源 → 逐条三态对照；符合度 = 符合项 ÷ 已对照项，**未知项按 0 计，所以只会偏低、不会偏高**；硬性不满足单独折叠；**这不是入组资格，也不代表效果**。10 条全为合成数据。
@@ -136,7 +141,7 @@
 
 <img src="docs/screenshots/10-settings.jpg" width="100%">
 
-> 截图源文件在 `prototypes/_evidence/*.png`（27 张，可用 `npm run probe:proto` 重跑重现，不入库）；README 用的是压缩副本 `docs/screenshots/*.jpg`（1440 宽、7.1 MB）。
+> 截图源文件在 `prototypes/_evidence/*.png`（29 张，可用 `npm run probe:proto` 重跑重现，不入库）；README 用的是压缩副本 `docs/screenshots/*.jpg`（1440 宽、7.5 MB）。
 
 
 ## 开发与本地验收

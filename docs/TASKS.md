@@ -1,10 +1,10 @@
 # 实施任务与当前交接
 
 规格版本：`docs/SPEC.md` 第十版（十页 56 条 / ACC-001–ACC-056，2026-10-24）
-原型版本：`prototypes/v0.2/`（11 个一级页 + 9 个二级页签 = 20 屏），`app.js` sha256 `96d176a9…`
+原型版本：`prototypes/v0.2/`（11 个一级页 + 9 个二级页签 = 20 屏），`app.js` sha256 `45a82441…`
 数据模型：`schema/0001_initial.sql` 草案 36 表 / 6 触发器 / 24 索引，sha256 `711ffefc…`（**G3 未签**）
 当前分支/包版本：`main` · `@xyb-community/biliary-tract-workbench@0.1.0`
-闸口：**G1 ✅ 已签**（2026-10-24 19:27）· **G2 🟡 材料就绪待确认** · **G3 ⬜ 未做**
+闸口：**G1 ✅ 已签**（2026-10-24 19:27）· **G2 🟡 逐条走查中 11/56**（dash 4 / type 4 / jaundice 3 已通过）· **G3 ⬜ 未做**
 
 > 硬约束：**G2 未签之前，`dsh/` 与 `lib/` 里不得写任何真实业务逻辑**。
 > T02 及之后的单元都处于「未获准开工」，不是「还没排期」。
@@ -30,7 +30,7 @@
 
 ## 未验证项
 
-1. **G2 未签**：56 条功能没有一条被维护者按 ACC 号打勾（见 `docs/GATE-RECORDS.md`）。
+1. **G2 未签完**：56 条功能中 11 条已按 ACC 号打勾（ACC-001~011），其余 45 条未走查（见 `docs/G2-CONFIRM-SHEET.md`）。
 2. **10 条临床试验全是合成数据**（注册号 `DEMO-` 前缀），不是真实试验；无后台同步任务，`trial_track_event` 靠手工写入。
 3. **没有临床核对人**：M1–M13 全部标「未核实」；`guideline_ref` 仍是空表，三条解释通道在界面上显示「未引入」。
 4. **移动端只做降级布局**（`@media max-width:900px`），未逐屏实测。
@@ -38,7 +38,7 @@
 
 ## 下一步具体动作/命令
 
-1. 维护者按 `docs/FEATURE-INVENTORY.csv` 的 ACC-001–ACC-056 逐条确认原型（材料见 `docs/PROTOTYPE-REVIEW.md` + `prototypes/_evidence/` 27 张截图）。
+1. 维护者按 `docs/FEATURE-INVENTORY.csv` 的 ACC-001–ACC-056 逐条确认原型（材料见 `docs/PROTOTYPE-REVIEW.md` + `prototypes/_evidence/` 29 张截图）。
 2. 通过后在 `docs/GATE-RECORDS.md` 的 G2 段写清确认人 / 原话 / 时间 / 版本 / 返工条目 → 签 G2。
 3. 复核 schema 与原型是否一致 → 在 `schema/freeze-contract.md` 顶部补确认人与结构变更清单 → 签 G3。
 4. 签完 G3 才开 T02：先做迁移与 `_migration` 记账，再按页接 T03–T07。
