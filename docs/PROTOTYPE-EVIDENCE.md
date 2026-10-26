@@ -26,8 +26,8 @@
 
 覆盖到的交互：一级导航切换、`treat` / `labs` 二级页签、两套档案切换、一图秀选指标（上限 4 条）与时间范围（全部 / 6 月 / 3 月）、指标卡 3D 翻面、字号三档、演示数据开关、7 日引流表导出预览、AI 面板打开与"模拟回复自检"。
 
-截图原图在 `prototypes/_evidence/`（29 张 PNG，23 MB），**不入库**：该目录在 `.gitignore` 里，需要时 `npm run probe:proto` 重跑即可重现。
-README 展示的是压缩副本 `docs/screenshots/*.jpg`（1440 宽，7.5 MB，**已入库**），随 `npm run shots:sync` 从原图生成。
+截图原图在 `prototypes/_evidence/`（27 张 PNG，22 MB），**不入库**：该目录在 `.gitignore` 里，需要时 `npm run probe:proto` 重跑即可重现。
+README 展示的是压缩副本 `docs/screenshots/*.jpg`（1440 宽，7.2 MB，**已入库**），随 `npm run shots:sync` 从原图生成。
 
 ## 三、逐屏对照：这一屏在证明什么
 

@@ -2,7 +2,7 @@
 
 > 用途：G2 的通过方式是**按 ACC 号打勾**，不是「看着还行」。这份表把 56 条摊平成一页，
 > 每条只留「在原型里看什么」一句话；模块详情与字段来源见 `docs/FEATURE-INVENTORY.csv`，
-> 截图在 `docs/screenshots/`（29 张 JPG，已入库，README 同款）；原图 PNG 在 `prototypes/_evidence/`（不入库，可重跑重现）。
+> 截图在 `docs/screenshots/`（27 张 JPG，已入库，README 同款）；原图 PNG 在 `prototypes/_evidence/`（不入库，可重跑重现）。
 
 > 回复格式：`ACC-001~012 通过` / `ACC-023 返工：<哪不对>`；整页通过可写 `dash 整页通过`。
 

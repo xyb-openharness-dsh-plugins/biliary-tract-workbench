@@ -63,7 +63,7 @@
 - **没有业务代码**：`dsh/` 与 `lib/` 仍只有注册骨架，G2 通过前不写业务逻辑。
 - **有演示数据，但不是真实患者**：`demo/` 里两套**合成**档案（肝门部 pCC 减黄后手术 / 胆囊癌术后影像复发）与 10 条**合成**试验（注册号 `DEMO-` 前缀），只用于原型走查与库结构验证；`*.sqlite` 不入库，随时可由 `npm run build:demo` 重建。
 
-## 原型截图（20 屏 / 29 张）
+## 原型截图（20 屏 / 27 张）
 
 当前原型的实机截图（Chrome 145 真实内核，1440×900）；每张都可以点开看原尺寸。原型**不接 DSH、不落库、无 AI**，刷新即重置。逐条走查进度见 [G2 确认表](docs/G2-CONFIRM-SHEET.md)，证据与限制见 [原型证据](docs/PROTOTYPE-EVIDENCE.md)。
 
@@ -134,14 +134,14 @@
 ### 复查与准备
 "还有多少天"只是日期减法；问题清单里已答复的照原话记；导出页固定声明"不是医疗结论"。
 
-<img src="docs/screenshots/09-care.jpg" width="100%">
+<img src="docs/screenshots/10-care.jpg" width="100%">
 
 ### 全局设置
 资料目录、三档字号、演示数据开关（与真实档案物理隔离，关掉不删东西）。
 
-<img src="docs/screenshots/10-settings.jpg" width="100%">
+<img src="docs/screenshots/11-settings.jpg" width="100%">
 
-> 截图源文件在 `prototypes/_evidence/*.png`（29 张，可用 `npm run probe:proto` 重跑重现，不入库）；README 用的是压缩副本 `docs/screenshots/*.jpg`（1440 宽、7.5 MB）。
+> 截图源文件在 `prototypes/_evidence/*.png`（27 张，可用 `npm run probe:proto` 重跑重现，不入库）；README 用的是压缩副本 `docs/screenshots/*.jpg`（1440 宽、7.2 MB）。27 张全部在下面按页面分组嵌入，没有一张只躺在目录里。
 
 
 ## 开发与本地验收

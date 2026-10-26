@@ -132,3 +132,15 @@
 - **G2 记账**：ACC-009 / ACC-010 / ACC-011 标为通过（2026-10-26），G2 进度 **11/56**。
   原型哈希同步为 `app.js 45a82441…` / `style.css f196859b…` / `index.html e1557e79…`（三份文档 + 确认单）。
 - **截图**：29 张（新增 2 张悬浮态），`docs/screenshots/` 7.5 MB；README 的黄疸、一图秀两节各换上新图。
+
+### README 截图清单对齐（2026-10-26）
+
+- **发现两处死账**：README 的「复查与准备」「全局设置」引用的是 `09-care.jpg` / `10-settings.jpg`，
+  而这两张是 **10-24 的旧编号**（当时还没有临床试验页，页面序号是 1–10）；探针现在按 11 页产出 `10-care` / `11-settings`。
+  两张旧图既没被更新也没被删除，README 因此一直展示过期画面。
+- **处理**：删掉 `docs/screenshots/09-care.jpg`、`10-settings.jpg` 与对应原图 `prototypes/_evidence/09-care.png`、`10-settings.png`；
+  README 改指 `10-care.jpg` / `11-settings.jpg`。现在目录 27 张与 README 引用 **1:1 对平**。
+- **加一道闸**：新增 `scripts/check-readme-shots.mjs`（`npm run check:shots`，已并入 `npm run check`）——
+  目录里有、README 没引用 → 报错；README 引用但文件不存在 → 报错。带 `*` 的通配写法当说明文字忽略。
+  负向测试：故意放一张没引用的图 + 一条死链，两条都能拦下并给出改法。
+- 数量口径同步：README「20 屏 / 27 张」、证据文档「27 张 PNG，22 MB」「JPG 7.2 MB」、确认单与任务表同改。

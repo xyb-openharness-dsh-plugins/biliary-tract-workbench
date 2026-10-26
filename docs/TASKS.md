@@ -38,7 +38,7 @@
 
 ## 下一步具体动作/命令
 
-1. 维护者按 `docs/FEATURE-INVENTORY.csv` 的 ACC-001–ACC-056 逐条确认原型（材料见 `docs/PROTOTYPE-REVIEW.md` + `prototypes/_evidence/` 29 张截图）。
+1. 维护者按 `docs/FEATURE-INVENTORY.csv` 的 ACC-001–ACC-056 逐条确认原型（材料见 `docs/PROTOTYPE-REVIEW.md` + `prototypes/_evidence/` 27 张截图）。
 2. 通过后在 `docs/GATE-RECORDS.md` 的 G2 段写清确认人 / 原话 / 时间 / 版本 / 返工条目 → 签 G2。
 3. 复核 schema 与原型是否一致 → 在 `schema/freeze-contract.md` 顶部补确认人与结构变更清单 → 签 G3。
 4. 签完 G3 才开 T02：先做迁移与 `_migration` 记账，再按页接 T03–T07。
