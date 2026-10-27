@@ -131,6 +131,63 @@ const pageHead = (extra = '') => {
 /* 唯一允许的判断出口 */
 const verdictBox = (what) => `<div class="verdict"><b>${esc(what)}</b><span>这一句需要问你的医生。工作台只摆记录，不给结论。</span></div>`;
 
+/* ---------------- 〇 病程状态卡（36 号 §2.6）：看板第一张卡 ----------------
+   四件：卡头 eyebrow（D+N · 距下一阶段）／大字天数（锚点日派生）／现状行（阶段原文 + 状态 + 下次）／出口按钮排。
+   本台的锚点取「手术日」：根治性切除那天记 D0。没有手术记录时整卡「待初始化」，不替用户猜一个起点。
+   天数只做日期减法，不加任何判读。 */
+function stageAnchor() {
+  const ops = P().treatments
+    .filter((t) => t.modality === 'resection' && t.startedOn)
+    .sort((a, b) => a.startedOn.localeCompare(b.startedOn));
+  return ops.length ? ops[0] : null;
+}
+
+function stagePhase() {
+  const sys = P().treatments.filter((t) => t.modality === 'systemic');
+  if (!sys.length) return null;
+  const open = sys.filter((t) => !t.endedOn);
+  const t = open.length ? open[open.length - 1] : sys[sys.length - 1];
+  let status;
+  if (!t.startedOn) status = '方案待定 · 未开始';
+  else if (t.endedOn) status = `已结束 · ${t.endedOn}`;
+  else if (t.cyclesPlanned) status = `进行中 · 已完成 ${t.cyclesDone ?? '—'} / ${t.cyclesPlanned} 周期`;
+  else status = '进行中';
+  return { name: `${t.line ? `${t.line} 线 · ` : ''}${t.regimen}`, status, on: t.startedOn || '' };
+}
+
+function stageCard() {
+  const op = stageAnchor();
+  const next = P().visits.filter((v) => v.planned && v.on).sort((a, b) => a.on.localeCompare(b.on))[0];
+  const ph = stagePhase();
+  if (!op) {
+    return `<section class="stagecard">
+      <header><span class="eyebrow">病程状态卡</span><small>天数由手术日算，不手填</small></header>
+      <div class="stage-empty"><b>待初始化</b><p>还没有记下手术日，所以没有 D+N。三步向导里先填「哪天做的手术」，这张卡才会出现天数。</p></div>
+      <div class="stage-actions"><button class="primary" data-action="go" data-page="settings">去三步向导 →</button></div>
+    </section>`;
+  }
+  const n = dayGap(op.startedOn, TODAY);
+  const gap = next ? dayGap(TODAY, next.on) : null;
+  const gapLine = gap === null ? '' : gap > 0 ? `还有 ${gap} 天` : gap === 0 ? '就是今天' : `已经过了 ${-gap} 天`;
+  const eyebrow = `D+${n} 术后状态卡 · 距${next ? next.purpose : '下一阶段（未记）'}`;
+  return `<section class="stagecard">
+    <header><span class="eyebrow">${esc(eyebrow)}</span><small>天数由手术日算，不手填</small></header>
+    <div class="stage-body">
+      <div class="stage-num"><b>第 ${n} 天</b><small>术后 · ${esc(op.startedOn)} 起算</small></div>
+      <div class="stage-now">
+        <div class="stage-line"><span class="k">当前阶段</span><b>${ph ? esc(ph.name) : na('无系统治疗记录')}</b>${ph ? pill(ph.status) : ''}</div>
+        <div class="stage-line"><span class="k">下次</span>${next
+          ? `<b>${esc(next.on)}</b><span>${esc(next.purpose)}</span><span class="muted">${esc(gapLine)}</span>`
+          : na('没有记下下次门诊日期')}</div>
+      </div>
+    </div>
+    <div class="stage-actions">
+      <button class="primary" data-action="go" data-page="treat">看治疗线序 →</button>
+      <button data-primer-open>疾病概要：胆道癌是什么？</button>
+    </div>
+  </section>`;
+}
+
 /* ---------------- ① 现状卡四行（DASH-01） ---------------- */
 function keyMetricLine() {
   const picks = ['bilirubin_total', 'ca19_9', 'weight'].map((k) => MET()[k]).filter(Boolean);
@@ -213,7 +270,9 @@ function axisOverview() {
 function reminders() {
   const out = [];
   const nextVisit = P().visits.filter((v) => v.planned && v.on).sort((a, b) => a.on.localeCompare(b.on))[0];
-  if (nextVisit) {
+  /* 下次门诊已由病程状态卡（36 号 §2.6）的「下次」行给出日期、事项与天数，
+     这里不再重复一次同样的日期——同一屏说两遍会让人以为是两件事。 */
+  if (nextVisit && !stageAnchor()) {
     const gap = dayGap(TODAY, nextVisit.on);
     out.push({ t: `你记的下次门诊 ${nextVisit.on} ${gap > 0 ? `还差 ${gap} 天` : gap === 0 ? '就是今天' : `已经过了 ${-gap} 天`}`, d: `这条按你在 ${P().visits.filter((v) => !v.planned).slice(-1)[0]?.on || '—'} 门诊记下的日期算，不是系统排的`, act: '把要问的写下来' });
   }
@@ -239,7 +298,7 @@ function vDash() {
     ['care', 'calendar', '写一个想问的问题', '下次门诊带着去'],
     ['chart', 'chart', '看两条线的图', '指标与治疗节点对齐']
   ];
-  return pageHead() + reminders() + nowCard() +
+  return pageHead() + stageCard() + reminders() + nowCard() +
     `<div class="section-title"><div><h2>两条线分开看</h2><p>上下并列，不做加权，不产生综合评分</p></div></div>` + axisOverview() +
     `<div class="section-title"><div><h2>直接去记</h2><p>四个入口，都落在"记录"上，没有一个落在"评价"上</p></div></div>
      <div class="task-grid">${entries.map(([p, ic, t, s]) => `<button class="task-entry" data-action="go" data-page="${p}"><span class="entry-icon">${icon(ic)}</span><b>${esc(t)}</b><span>${esc(s)}</span><span class="arrow">→</span></button>`).join('')}</div>

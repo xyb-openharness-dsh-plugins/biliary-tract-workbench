@@ -1,6 +1,6 @@
 {
   "name": "@xyb-community/biliary-tract-workbench",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "本机优先的胆道癌（胆囊癌 / 肝内胆管癌 / 肝外胆管癌）分型与可切除性记录、黄疸与胆道引流照护、治疗线序与复查准备工作台",
   "private": true,
   "type": "module",

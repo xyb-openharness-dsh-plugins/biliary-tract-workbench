@@ -498,6 +498,35 @@ dialog::backdrop{background:rgba(28,43,58,.36);backdrop-filter:blur(2px)}
    .nowcard 四行只填事实；.gate 表示解释缺出处所以整块不显示；.verdict 是唯一允许出现的判断出口。
    ========================================================================== */
 
+/* 病程状态卡（36 号 §2.6）：看板第一张卡，四件——卡头 eyebrow / 大字天数 / 现状行 / 出口按钮排。
+   天数由手术日派生，字号 34px 走品牌色；这四件缺一即不合格，所以样式也按四块切。 */
+.stagecard{display:grid;gap:0;background:#fff;border:1px solid var(--line);border-left:4px solid var(--violet);border-radius:var(--radius);overflow:hidden}
+.stagecard > header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 20px 11px;border-bottom:1px solid var(--line);background:linear-gradient(#fffdf7,#fff)}
+.stagecard > header .eyebrow{letter-spacing:.6px;text-transform:none;font-size:11px}
+.stagecard > header small{font-size:10.5px;color:var(--muted);white-space:nowrap}
+.stage-body{display:grid;grid-template-columns:236px minmax(0,1fr);gap:0}
+.stage-num{padding:16px 20px;border-right:1px solid #f0ebe0;display:grid;align-content:center;gap:2px}
+.stage-num b{font-size:34px;line-height:1.1;color:var(--violet-deep);font-weight:700;letter-spacing:-1px;font-variant-numeric:tabular-nums}
+.stage-num small{font-size:10.5px;color:var(--muted)}
+.stage-now{padding:16px 20px;display:grid;gap:11px;align-content:center;min-width:0}
+.stage-line{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;font-size:13px;line-height:1.6;min-width:0}
+.stage-line .k{flex:0 0 60px;font-size:11px;color:var(--muted);letter-spacing:.2px}
+.stage-line b{font-weight:600}
+.stage-line .muted{font-size:11.5px}
+.stage-empty{padding:18px 20px;display:grid;gap:6px}
+.stage-empty b{font-size:15px}
+.stage-empty p{font-size:12.5px;color:var(--ink-2)}
+.stage-actions{display:flex;gap:9px;flex-wrap:wrap;padding:12px 20px;border-top:1px solid var(--line);background:#fffdf7}
+.stage-actions button{font-size:12.5px}
+/* 窄屏：天数在上、现状在下。断点写在组件之后——写在前面会被上面的基础规则盖掉（同权重、后者生效）。 */
+@media(max-width:720px){
+  .stage-body{grid-template-columns:minmax(0,1fr)}
+  .stage-num{border-right:0;border-bottom:1px solid #f0ebe0;padding-bottom:12px}
+  .stage-num b{font-size:30px}
+  .stagecard > header{flex-wrap:wrap;gap:4px}
+  .stage-actions button{flex:1 1 auto}
+}
+
 /* 现状卡：四行模板。左标 / 中值 / 右出处，缺数据写「暂无记录」而不是留空。 */
 .nowcard{display:grid;gap:0;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden}
 .nowcard > header{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:15px 20px;border-bottom:1px solid var(--line);background:linear-gradient(#fffdf7,#fff)}
