@@ -2,6 +2,24 @@
 
 只增不删；每条写清"改了什么 + 为什么 + 用户可见结果"。版本号与 VERSION、package.json 三处必须一致。
 
+## 0.1.3 — 2026-10-28
+
+- **修装机后业务区空白（根因，三处半成品）**：
+  1. 本仓没有 `public/`，`dsh/index.js` 也只注册了 `/health`——装机后没有任何可加载的业务页。新增
+     `scripts/build-public.mjs`（从 `prototypes/v0.2` 产出 7 个文件，只改 index.html 两处版本字面量）、`dsh/server.js`
+     （静态层，只从 `public/` 出文件，拦 `..`/绝对路径/符号链接逃逸），并注册 `/api/biliary-tract-workbench/ui`
+     静态前缀路由（注册路径不带尾斜杠：宿主 `match()` 以 `prefix + '/'` 判子路径，带尾斜杠会让 `/ui/app.js`、
+     `/ui/style.css` 落到 SPA 兜底，浏览器把 HTML 当 JS/CSS 解析）。
+  2. `lib/client.js` 的业务区此前是占位 `<main>`，从不加载原型；现改为 iframe 装 `public/`（HEAD 探活失败或收到非
+     `text/html` 才退回占位骨架，占位里的「大字」按钮也只在兜底时出现）。
+  3. 注册描述符把 `businessWidth` 写在顶层，宿主只读 `descriptor.layout.businessWidth`，等于一直退回默认 0.36；
+     改为 `layout: { businessWidth: 0.65 }`，与家族基线一致。
+  `package.json` 的 `files` 增加 `public`，`check` 增加 `node --check dsh/server.js` 与 `build-public.mjs --check`。
+  用户可见结果：装机后业务区显示原型界面（分型/可切除性、黄疸与引流、化验与复查），不再是空白或占位卡。
+- `scripts/check-wording.mjs`：`public/demo-data.js` 是事实层（医生原话与检验原文），与 `prototypes` 下同名文件一样
+  不参与文案红线扫描；此前只因 public 刚出现才被误扫。
+- 版本升 0.1.3（VERSION / package.json / lib/version.js 同步）。
+
 ## 0.1.1 — 2026-10-27
 
 ### 36 号 v2 补齐（指南可点 + 状态卡）

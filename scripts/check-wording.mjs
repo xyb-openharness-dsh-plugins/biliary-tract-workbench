@@ -53,6 +53,10 @@ const ADVICE = [
 const SCAN = ['public', 'src']
 const SCAN_FILES = ['lib/client.js', 'prototypes/v0.2/app.js']
 const EXT = /\.(html|js|mjs|css|json)$/
+/* demo-data.js 是第 ① 层事实（医生原话与检验原文），公开目录里那份只是
+   prototypes/v0.2 下同名文件的逐字复制；它与原型侧同样不参与文案红线扫描
+   （见文件头第 11 行：不扫 demo/ 与 prototypes 下的 demo-data.js）。 */
+const DATA_FILES = new Set(['demo-data.js'])
 
 function walk(dir, out = []) {
   if (!existsSync(dir)) return out
@@ -60,7 +64,7 @@ function walk(dir, out = []) {
     const p = join(dir, name)
     const st = statSync(p)
     if (st.isDirectory()) walk(p, out)
-    else if (EXT.test(name) && !name.endsWith('.map')) out.push(p)
+    else if (EXT.test(name) && !name.endsWith('.map') && !DATA_FILES.has(name)) out.push(p)
   }
   return out
 }
