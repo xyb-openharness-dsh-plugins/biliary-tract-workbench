@@ -270,6 +270,18 @@ npm pack
 
 README 自己也过闸。`npm run check:readme` 查六节骨架（这是什么 → 谁适合用 → 主要功能 → 痛点 → 功能展现 → 第一版不完美）、边界句在不在首屏、痛点有没有写成表；`npm run check:shots` 对账截图和目录，一张不多一张不少。骨架怎么推广到几十个仓库，写在 [docs/32-README-CONTRACT.md](docs/32-README-CONTRACT.md)，填空模板是 [templates/README-family.md](templates/README-family.md)。
 
+### 当前版本与安装包
+
+- 当前版本：**v0.1.3**（2026-10-28）
+- 安装包：[xyb-community-biliary-tract-workbench-0.1.3.tgz](https://github.com/xyb-openharness-dsh-plugins/biliary-tract-workbench/releases/download/v0.1.3/xyb-community-biliary-tract-workbench-0.1.3.tgz)
+- 校验：同目录 `SHA256SUMS-0.1.3`，下载后 `shasum -a 256 -c SHA256SUMS-0.1.3`
+
+```bash
+corepack pnpm add -w --save-exact file:/绝对路径/xyb-community-biliary-tract-workbench-0.1.3.tgz
+```
+
+v0.1.3 修的是「装上后业务区空白」：补 `public/` 产物与静态 UI 路由（注册路径不带尾斜杠），业务区改为 iframe 加载原型；AI 面板与 1px 分隔线同 A 家族。
+
 本地安装入口以当前 Desktop/CLI 帮助为准。安装后按 [docs/06-VALIDATION-AND-RELEASE.md](docs/06-VALIDATION-AND-RELEASE.md) 与官方自测完成真实 UI 验收，并填写 [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md)。静态检查不代表已加载。
 
 Logo 来源与使用限制见 [assets/README.md](assets/README.md)。许可证、作者、仓库/发布策略由本项目维护者确认后填写；模板默认为 private/UNLICENSED。
