@@ -29,15 +29,39 @@ function fail(messages) {
   process.exit(1)
 }
 
+/* 版本字面量用锚点正则替换，不写死原型当时的版本号：
+   原型的 v0.x.y 从来不跟包版本同步，硬编码会让"原型升过一次字面量"之后整条生成链断掉。
+   四处锚点分别是 title / 顶部说明条 / 顶栏版本 chip / 页脚 app-version —— 少一处就会出现
+   "首页 chip 是旧版本、audit 报版本不一致"，而用户第一眼看到的就是那个 chip。 */
 function patchIndex(html) {
-  const titleFrom = '<title>小胆宝 BiliPal · 胆道癌工作台原型 v0.1.0</title>'
-  const titleTo = `<title>小胆宝 BiliPal · 胆道癌工作台 v${version}</title>`
-  const barFrom = '<div class="prototype-bar"><span><b>交互原型 v0.1.0</b> · 全部为合成资料，不含真实患者信息</span><span>仅本页演示 · 刷新重置 · 未接入 DSH / AI</span></div>'
-  const barTo = `<div class="prototype-bar"><span><b>开发版 v${version}</b> · 全部为合成演示资料，不含真实患者信息</span><span>本机资料整理 · 只记录不判定 · 判断归主诊团队</span></div>`
-  for (const needle of [titleFrom, barFrom]) {
-    if (!html.includes(needle)) fail(`prototypes/v0.2/index.html 结构变了，找不到锚点：${needle.slice(0, 60)}…`)
+  const edits = [
+    {
+      from: /<title>小胆宝 BiliPal · 胆道癌工作台(原型)? v[\d.]+<\/title>/,
+      to: `<title>小胆宝 BiliPal · 胆道癌工作台 v${version}</title>`,
+      what: '<title>',
+    },
+    {
+      from: /<div class="prototype-bar">[\s\S]*?<\/div>/,
+      to: `<div class="prototype-bar"><span><b>开发版 v${version}</b> · 全部为合成演示资料，不含真实患者信息</span><span>本机资料整理 · 只记录不判定 · 判断归主诊团队</span></div>`,
+      what: '顶部说明条',
+    },
+    {
+      from: /(<button class="ver-chip" id="ver-chip"[^>]*>)v[\d.]+(<\/button>)/,
+      to: `$1v${version}$2`,
+      what: '顶栏版本 chip',
+    },
+    {
+      from: /(<b id="app-version">)v[\d.]+(<\/b>)/,
+      to: `$1v${version}$2`,
+      what: '页脚 app-version',
+    },
+  ]
+  let out = html
+  for (const { from, to, what } of edits) {
+    if (!from.test(out)) fail(`prototypes/v0.2/index.html 结构变了，找不到锚点：${what}`)
+    out = out.replace(from, to)
   }
-  return html.replace(titleFrom, titleTo).replace(barFrom, barTo)
+  return out
 }
 
 /* style/demo-data/primer 三件套原样复制；index.html 只换两处版本字面量。 */

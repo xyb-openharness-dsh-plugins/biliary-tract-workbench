@@ -272,15 +272,17 @@ README 自己也过闸。`npm run check:readme` 查六节骨架（这是什么 �
 
 ### 当前版本与安装包
 
-- 当前版本：**v0.1.3**（2026-10-28）
-- 安装包：[xyb-community-biliary-tract-workbench-0.1.3.tgz](https://github.com/xyb-openharness-dsh-plugins/biliary-tract-workbench/releases/download/v0.1.3/xyb-community-biliary-tract-workbench-0.1.3.tgz)
-- 校验：同目录 `SHA256SUMS-0.1.3`，下载后 `shasum -a 256 -c SHA256SUMS-0.1.3`
+- 当前版本：**v0.1.4**（2026-11-11）
+- 安装包：[xyb-community-biliary-tract-workbench-0.1.4.tgz](https://github.com/xyb-openharness-dsh-plugins/biliary-tract-workbench/releases/download/v0.1.4/xyb-community-biliary-tract-workbench-0.1.4.tgz)
+- 校验：同目录 `SHA256SUMS-0.1.4`，下载后 `shasum -a 256 -c SHA256SUMS-0.1.4`
 
 ```bash
-corepack pnpm add -w --save-exact file:/绝对路径/xyb-community-biliary-tract-workbench-0.1.3.tgz
+corepack pnpm add -w --save-exact file:/绝对路径/xyb-community-biliary-tract-workbench-0.1.4.tgz
 ```
 
 v0.1.3 修的是「装上后业务区空白」：补 `public/` 产物与静态 UI 路由（注册路径不带尾斜杠），业务区改为 iframe 加载原型；AI 面板与 1px 分隔线同 A 家族。
+
+v0.1.4 修的是「点 AI 对话没反应」：会话判定从 `Boolean(conversation)` 改成宿主归属判定（`ownsSession` + `currentSession`），无会话时按钮不再禁用而是调 `newSession(defaultWorkspace)` 创建归属会话，并订阅会话变化重渲染；取消选目录不留空会话、创建失败在工作台内显示原因，全程只创建不自动发送。
 
 本地安装入口以当前 Desktop/CLI 帮助为准。安装后按 [docs/06-VALIDATION-AND-RELEASE.md](docs/06-VALIDATION-AND-RELEASE.md) 与官方自测完成真实 UI 验收，并填写 [docs/ACCEPTANCE.md](docs/ACCEPTANCE.md)。静态检查不代表已加载。
 

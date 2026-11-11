@@ -1,6 +1,6 @@
 {
   "name": "@xyb-community/biliary-tract-workbench",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "本机优先的胆道癌（胆囊癌 / 肝内胆管癌 / 肝外胆管癌）分型与可切除性记录、黄疸与胆道引流照护、治疗线序与复查准备工作台",
   "private": true,
   "type": "module",
@@ -21,7 +21,7 @@
     "NOTICE.md"
   ],
   "scripts": {
-    "check": "node --check dsh/index.js && node --check dsh/server.js && node --check lib/client.js && node --check lib/layout.js && node --check prototypes/v0.2/app.js && node scripts/build-version.mjs --check && node scripts/build-public.mjs --check && node --test test/*.test.mjs && node scripts/check-schema.mjs . && node scripts/check-medical-rules.mjs . && node scripts/check-wording.mjs . && node scripts/check-workbench-package.mjs . && node scripts/check-readme.mjs . && node scripts/check-readme-shots.mjs .",
+    "check": "node --check dsh/index.js && node --check dsh/server.js && node --check lib/client.js && node --check lib/layout.js && node --check prototypes/v0.2/app.js && node scripts/build-version.mjs --check && node scripts/build-public.mjs --check && node --test test/*.test.mjs && node scripts/check-schema.mjs . && node scripts/check-medical-rules.mjs . && node scripts/check-wording.mjs . && node scripts/check-workbench-package.mjs . && node scripts/check-readme.mjs . && node scripts/check-readme-shots.mjs . && node scripts/check-agent-pane-contract.mjs .",
     "build:public": "node scripts/build-public.mjs",
     "check:public": "node scripts/build-public.mjs --check",
     "check:schema": "node scripts/check-schema.mjs .",
